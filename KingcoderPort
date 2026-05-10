@@ -3,217 +3,317 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Lua Dev Portfolio</title>
-<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;600;700&family=Share+Tech+Mono&family=Inter:wght@300;400;500&display=swap" rel="stylesheet"/>
+<title>KingCoder — Lua Developer</title>
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Share+Tech+Mono&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
 <style>
-  *{margin:0;padding:0;box-sizing:border-box;}
-  :root{
-    --red:#E24B4A;--red-dark:#A32D2D;
-    --gray-900:#0a0a0c;--gray-800:#111116;--gray-700:#1a1a22;
-    --gray-400:#888780;--gray-200:#B4B2A9;--gray-100:#D3D1C7;
-    --accent:#E24B4A;--accent2:#F09595;
-  }
-  body{background:var(--gray-900);color:var(--gray-100);font-family:'Inter',sans-serif;overflow-x:hidden;}
-  .hero{position:relative;min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:4rem 2rem 3rem;overflow:hidden;}
-  .hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 60% 20%, rgba(226,75,74,0.12) 0%, transparent 70%);pointer-events:none;}
-  .grid-overlay{position:absolute;inset:0;background-image:linear-gradient(rgba(226,75,74,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(226,75,74,0.04) 1px,transparent 1px);background-size:40px 40px;pointer-events:none;}
-  .status-pill{display:inline-flex;align-items:center;gap:8px;background:rgba(226,75,74,0.1);border:1px solid rgba(226,75,74,0.3);border-radius:100px;padding:6px 14px;font-size:12px;color:var(--accent2);font-family:'Share Tech Mono',monospace;margin-bottom:2rem;width:fit-content;}
-  .dot{width:7px;height:7px;background:var(--accent);border-radius:50%;animation:pulse 2s infinite;}
-  @keyframes pulse{0%,100%{opacity:1;}50%{opacity:0.4;}}
-  .hero-tag{font-family:'Share Tech Mono',monospace;font-size:12px;color:var(--accent);letter-spacing:0.15em;text-transform:uppercase;margin-bottom:1rem;}
-  h1{font-family:'Rajdhani',sans-serif;font-size:clamp(3rem,10vw,7rem);font-weight:700;line-height:0.9;color:#fff;margin-bottom:1.5rem;}
-  h1 span{color:var(--accent);}
-  .hero-sub{font-size:1.05rem;color:var(--gray-200);max-width:520px;line-height:1.7;font-weight:300;margin-bottom:2.5rem;}
-  .hero-stats{display:flex;gap:2.5rem;flex-wrap:wrap;margin-bottom:3rem;}
-  .stat{display:flex;flex-direction:column;gap:2px;}
-  .stat-num{font-family:'Rajdhani',sans-serif;font-size:2rem;font-weight:700;color:#fff;}
-  .stat-num span{color:var(--accent);}
-  .stat-label{font-size:11px;color:var(--gray-400);letter-spacing:0.1em;text-transform:uppercase;}
-  .cta-row{display:flex;gap:1rem;flex-wrap:wrap;}
-  .btn{padding:12px 28px;border-radius:4px;font-size:14px;font-weight:500;cursor:pointer;border:none;text-decoration:none;display:inline-block;transition:all 0.2s;}
-  .btn-primary{background:var(--accent);color:#fff;}
-  .btn-outline{background:transparent;color:var(--gray-100);border:1px solid rgba(255,255,255,0.2);}
-  section{padding:5rem 2rem;}
-  .section-tag{font-family:'Share Tech Mono',monospace;font-size:11px;color:var(--accent);letter-spacing:0.15em;text-transform:uppercase;margin-bottom:0.75rem;}
-  h2{font-family:'Rajdhani',sans-serif;font-size:clamp(1.8rem,5vw,3rem);font-weight:700;color:#fff;margin-bottom:1rem;}
-  .section-line{width:40px;height:2px;background:var(--accent);margin-bottom:3rem;}
-  .skills-section{background:var(--gray-800);}
-  .skills-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1px;background:rgba(255,255,255,0.05);}
-  .skill-card{background:var(--gray-800);padding:2rem;display:flex;flex-direction:column;gap:0.75rem;}
-  .skill-icon{width:40px;height:40px;border-radius:4px;background:rgba(226,75,74,0.12);border:1px solid rgba(226,75,74,0.25);display:flex;align-items:center;justify-content:center;font-size:18px;}
-  .skill-name{font-family:'Rajdhani',sans-serif;font-size:1.15rem;font-weight:600;color:#fff;}
-  .skill-desc{font-size:13px;color:var(--gray-400);line-height:1.6;}
-  .skill-bar-bg{height:2px;background:rgba(255,255,255,0.08);border-radius:1px;overflow:hidden;margin-top:0.5rem;}
-  .skill-bar{height:100%;background:var(--accent);}
-  .projects-section{background:var(--gray-900);}
-  .projects-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.5rem;}
-  .project-card{background:var(--gray-700);border:1px solid rgba(255,255,255,0.06);border-radius:6px;overflow:hidden;}
-  .project-header{padding:1.5rem;border-bottom:1px solid rgba(255,255,255,0.06);}
-  .project-type{font-family:'Share Tech Mono',monospace;font-size:10px;color:var(--accent);letter-spacing:0.12em;text-transform:uppercase;margin-bottom:0.5rem;}
-  .project-name{font-family:'Rajdhani',sans-serif;font-size:1.3rem;font-weight:700;color:#fff;margin-bottom:0.5rem;}
-  .project-desc{font-size:13px;color:var(--gray-400);line-height:1.6;}
-  .project-footer{padding:1rem 1.5rem;display:flex;gap:0.5rem;flex-wrap:wrap;}
-  .tag{font-size:11px;padding:3px 10px;border-radius:3px;background:rgba(226,75,74,0.1);color:var(--accent2);font-family:'Share Tech Mono',monospace;}
-  .about-section{background:var(--gray-800);}
-  .about-grid{display:grid;grid-template-columns:1fr 1fr;gap:4rem;}
-  @media(max-width:640px){.about-grid{grid-template-columns:1fr;gap:2rem;}}
-  .about-text{font-size:1rem;color:var(--gray-200);line-height:1.8;font-weight:300;}
-  .about-text p+p{margin-top:1rem;}
-  .spec-row{display:flex;justify-content:space-between;padding:0.75rem 0;border-bottom:1px solid rgba(255,255,255,0.06);font-size:13px;}
-  .spec-key{color:var(--gray-400);font-family:'Share Tech Mono',monospace;font-size:11px;}
-  .spec-val{color:#fff;font-weight:500;}
-  .spec-val.green{color:#5DCAA5;}
-  .contact-section{background:var(--gray-900);text-align:center;}
-  .contact-inner{max-width:600px;margin:0 auto;}
-  .contact-sub{font-size:1rem;color:var(--gray-400);line-height:1.7;margin-bottom:2.5rem;}
-  .contact-box{background:var(--gray-700);border:1px solid rgba(226,75,74,0.2);border-radius:6px;padding:2rem;}
-  .discord-handle{font-family:'Share Tech Mono',monospace;font-size:1.3rem;color:var(--accent);margin-bottom:0.5rem;}
-  .contact-note{font-size:12px;color:var(--gray-400);}
-  footer{background:var(--gray-800);padding:1.5rem 2rem;display:flex;justify-content:space-between;border-top:1px solid rgba(255,255,255,0.05);}
-  .footer-name{font-family:'Rajdhani',sans-serif;font-weight:700;color:var(--gray-400);font-size:14px;}
-  .footer-copy{font-size:12px;color:var(--gray-400);font-family:'Share Tech Mono',monospace;}
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{
+  --accent:#E24B4A;
+  --accent2:#F09595;
+  --accent-dim:rgba(226,75,74,0.15);
+  --accent-border:rgba(226,75,74,0.3);
+  --g900:#07070a;
+  --g800:#0e0e14;
+  --g700:#15151e;
+  --g600:#1e1e2a;
+  --g500:#2a2a38;
+  --g400:#888799;
+  --g200:#b4b2c8;
+  --g100:#d3d1e8;
+  --white:#f0efff;
+}
+html{scroll-behavior:smooth;}
+body{background:var(--g900);color:var(--g100);font-family:'Inter',sans-serif;overflow-x:hidden;}
+::-webkit-scrollbar{width:4px;}
+::-webkit-scrollbar-track{background:var(--g900);}
+::-webkit-scrollbar-thumb{background:var(--accent);border-radius:2px;}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:1.25rem 3rem;display:flex;justify-content:space-between;align-items:center;background:rgba(7,7,10,0.85);backdrop-filter:blur(20px);border-bottom:1px solid rgba(226,75,74,0.08);}
+.nav-logo{font-family:'Rajdhani',sans-serif;font-size:1.4rem;font-weight:700;color:var(--white);letter-spacing:0.05em;}
+.nav-logo span{color:var(--accent);}
+.nav-links{display:flex;gap:2.5rem;}
+.nav-links a{font-family:'Share Tech Mono',monospace;font-size:11px;color:var(--g400);text-decoration:none;letter-spacing:0.12em;text-transform:uppercase;transition:color 0.2s;}
+.nav-links a:hover{color:var(--accent);}
+.nav-badge{font-family:'Share Tech Mono',monospace;font-size:11px;color:var(--accent2);background:var(--accent-dim);border:1px solid var(--accent-border);padding:5px 14px;border-radius:100px;display:flex;align-items:center;gap:7px;}
+.nav-dot{width:6px;height:6px;background:#4ade80;border-radius:50%;animation:blink 2s infinite;}
+@keyframes blink{0%,100%{opacity:1;}50%{opacity:0.3;}}
+.hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:8rem 3rem 4rem;position:relative;overflow:hidden;}
+.hero-glow-1{position:absolute;top:-20%;right:-10%;width:700px;height:700px;border-radius:50%;background:radial-gradient(circle, rgba(226,75,74,0.08) 0%, transparent 70%);pointer-events:none;}
+.hero-glow-2{position:absolute;bottom:-30%;left:-10%;width:600px;height:600px;border-radius:50%;background:radial-gradient(circle, rgba(226,75,74,0.05) 0%, transparent 70%);pointer-events:none;}
+.hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(226,75,74,0.03) 1px, transparent 1px),linear-gradient(90deg, rgba(226,75,74,0.03) 1px, transparent 1px);background-size:60px 60px;mask-image:radial-gradient(ellipse 80% 80% at 50% 50%, black 30%, transparent 100%);pointer-events:none;}
+.hero-eyebrow{display:flex;align-items:center;gap:12px;margin-bottom:2rem;}
+.hero-line{width:40px;height:1px;background:var(--accent);}
+.hero-eyebrow-text{font-family:'Share Tech Mono',monospace;font-size:11px;color:var(--accent);letter-spacing:0.2em;text-transform:uppercase;}
+.hero-name{font-family:'Rajdhani',sans-serif;font-size:clamp(1rem,3vw,1.4rem);font-weight:500;color:var(--g400);letter-spacing:0.3em;text-transform:uppercase;margin-bottom:0.5rem;}
+h1{font-family:'Rajdhani',sans-serif;font-size:clamp(4rem,12vw,9rem);font-weight:700;line-height:0.85;color:var(--white);letter-spacing:-0.03em;margin-bottom:2.5rem;position:relative;}
+h1 .accent{color:var(--accent);}
+h1 .outline{-webkit-text-stroke:2px var(--white);color:transparent;}
+.hero-desc{font-size:1.1rem;color:var(--g200);max-width:560px;line-height:1.8;font-weight:300;margin-bottom:3rem;border-left:2px solid var(--accent);padding-left:1.5rem;}
+.hero-stats{display:flex;gap:3rem;margin-bottom:3.5rem;flex-wrap:wrap;}
+.stat{position:relative;}
+.stat-num{font-family:'Rajdhani',sans-serif;font-size:2.8rem;font-weight:700;color:var(--white);line-height:1;}
+.stat-num sup{color:var(--accent);font-size:1.5rem;}
+.stat-label{font-family:'Share Tech Mono',monospace;font-size:10px;color:var(--g400);letter-spacing:0.15em;text-transform:uppercase;margin-top:4px;}
+.stat-divider{width:1px;background:rgba(255,255,255,0.08);align-self:stretch;}
+.hero-cta{display:flex;gap:1rem;flex-wrap:wrap;}
+.btn{padding:14px 32px;border-radius:3px;font-size:13px;font-weight:600;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:8px;letter-spacing:0.08em;text-transform:uppercase;transition:all 0.25s;font-family:'Share Tech Mono',monospace;}
+.btn-primary{background:var(--accent);color:#fff;box-shadow:0 0 30px rgba(226,75,74,0.3);}
+.btn-primary:hover{background:#c93f3e;box-shadow:0 0 40px rgba(226,75,74,0.5);transform:translateY(-2px);}
+.btn-ghost{background:transparent;color:var(--g200);border:1px solid rgba(255,255,255,0.15);}
+.btn-ghost:hover{border-color:var(--accent);color:var(--accent);transform:translateY(-2px);}
+.btn-arrow{font-size:16px;transition:transform 0.2s;}
+.btn-primary:hover .btn-arrow{transform:translateX(4px);}
+.marquee-wrap{background:var(--g800);border-top:1px solid rgba(255,255,255,0.05);border-bottom:1px solid rgba(255,255,255,0.05);padding:1rem 0;overflow:hidden;}
+.marquee-track{display:flex;gap:0;animation:marquee 20s linear infinite;width:max-content;}
+@keyframes marquee{from{transform:translateX(0);}to{transform:translateX(-50%);}}
+.marquee-item{font-family:'Share Tech Mono',monospace;font-size:12px;color:var(--g400);letter-spacing:0.15em;text-transform:uppercase;padding:0 2rem;display:flex;align-items:center;gap:2rem;white-space:nowrap;}
+.marquee-dot{width:4px;height:4px;background:var(--accent);border-radius:50%;flex-shrink:0;}
+section{padding:7rem 3rem;}
+.section-header{margin-bottom:4rem;}
+.section-eyebrow{font-family:'Share Tech Mono',monospace;font-size:11px;color:var(--accent);letter-spacing:0.2em;text-transform:uppercase;margin-bottom:1rem;display:flex;align-items:center;gap:10px;}
+.section-eyebrow::before{content:'';display:block;width:20px;height:1px;background:var(--accent);}
+h2{font-family:'Rajdhani',sans-serif;font-size:clamp(2rem,5vw,4rem);font-weight:700;color:var(--white);line-height:0.95;letter-spacing:-0.02em;}
+h2 span{color:var(--accent);}
+.skills-section{background:var(--g800);position:relative;overflow:hidden;}
+.skills-bg{position:absolute;right:-200px;top:50%;transform:translateY(-50%);width:600px;height:600px;border-radius:50%;background:radial-gradient(circle, rgba(226,75,74,0.04) 0%, transparent 70%);pointer-events:none;}
+.skills-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.04);}
+@media(max-width:900px){.skills-grid{grid-template-columns:repeat(2,1fr);}}
+@media(max-width:600px){.skills-grid{grid-template-columns:1fr;}}
+.skill-card{background:var(--g800);padding:2.5rem;display:flex;flex-direction:column;gap:1rem;transition:background 0.3s;position:relative;overflow:hidden;}
+.skill-card::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg, rgba(226,75,74,0.05) 0%, transparent 60%);opacity:0;transition:opacity 0.3s;}
+.skill-card:hover{background:var(--g700);}
+.skill-card:hover::before{opacity:1;}
+.skill-num{font-family:'Share Tech Mono',monospace;font-size:11px;color:rgba(226,75,74,0.4);letter-spacing:0.1em;}
+.skill-icon-wrap{width:48px;height:48px;border-radius:6px;background:var(--accent-dim);border:1px solid var(--accent-border);display:flex;align-items:center;justify-content:center;font-size:22px;}
+.skill-name{font-family:'Rajdhani',sans-serif;font-size:1.25rem;font-weight:700;color:var(--white);}
+.skill-desc{font-size:13px;color:var(--g400);line-height:1.7;}
+.skill-bar-wrap{margin-top:auto;padding-top:1rem;}
+.skill-bar-label{display:flex;justify-content:space-between;font-family:'Share Tech Mono',monospace;font-size:10px;color:var(--g400);margin-bottom:6px;letter-spacing:0.1em;}
+.skill-bar-bg{height:2px;background:rgba(255,255,255,0.06);border-radius:1px;}
+.skill-bar{height:100%;background:linear-gradient(90deg, var(--accent), var(--accent2));border-radius:1px;}
+.projects-section{background:var(--g900);}
+.projects-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1.5rem;}
+@media(max-width:700px){.projects-grid{grid-template-columns:1fr;}}
+.project-card{background:var(--g700);border:1px solid rgba(255,255,255,0.05);border-radius:4px;overflow:hidden;transition:all 0.3s;position:relative;}
+.project-card::after{content:'';position:absolute;inset:0;border:1px solid var(--accent);border-radius:4px;opacity:0;transition:opacity 0.3s;}
+.project-card:hover{transform:translateY(-4px);background:var(--g600);}
+.project-card:hover::after{opacity:0.4;}
+.project-img{height:180px;background:var(--g600);display:flex;align-items:center;justify-content:center;font-size:4rem;position:relative;overflow:hidden;border-bottom:1px solid rgba(255,255,255,0.05);}
+.project-img-bg{position:absolute;inset:0;background:linear-gradient(135deg, rgba(226,75,74,0.08) 0%, transparent 60%);}
+.project-body{padding:1.75rem;}
+.project-type{font-family:'Share Tech Mono',monospace;font-size:10px;color:var(--accent);letter-spacing:0.15em;text-transform:uppercase;margin-bottom:0.6rem;}
+.project-name{font-family:'Rajdhani',sans-serif;font-size:1.5rem;font-weight:700;color:var(--white);margin-bottom:0.75rem;}
+.project-desc{font-size:13px;color:var(--g400);line-height:1.7;margin-bottom:1.25rem;}
+.project-tags{display:flex;gap:0.5rem;flex-wrap:wrap;}
+.tag{font-size:11px;padding:4px 12px;border-radius:2px;background:var(--accent-dim);color:var(--accent2);font-family:'Share Tech Mono',monospace;letter-spacing:0.05em;border:1px solid var(--accent-border);}
+.about-section{background:var(--g800);position:relative;}
+.about-grid{display:grid;grid-template-columns:1.2fr 1fr;gap:5rem;align-items:start;}
+@media(max-width:800px){.about-grid{grid-template-columns:1fr;gap:3rem;}}
+.about-text{font-size:1rem;color:var(--g200);line-height:1.9;font-weight:300;}
+.about-text p+p{margin-top:1.25rem;}
+.about-quote{font-family:'Rajdhani',sans-serif;font-size:1.5rem;font-weight:600;color:var(--white);line-height:1.4;border-left:3px solid var(--accent);padding-left:1.5rem;margin-bottom:2rem;}
+.specs-card{background:var(--g700);border:1px solid rgba(255,255,255,0.06);border-radius:4px;overflow:hidden;}
+.specs-header{padding:1rem 1.5rem;background:var(--accent-dim);border-bottom:1px solid var(--accent-border);font-family:'Share Tech Mono',monospace;font-size:11px;color:var(--accent);letter-spacing:0.15em;text-transform:uppercase;}
+.spec-row{display:flex;justify-content:space-between;align-items:center;padding:0.9rem 1.5rem;border-bottom:1px solid rgba(255,255,255,0.04);font-size:13px;}
+.spec-row:last-child{border-bottom:none;}
+.spec-key{color:var(--g400);font-family:'Share Tech Mono',monospace;font-size:10px;letter-spacing:0.1em;text-transform:uppercase;}
+.spec-val{color:var(--white);font-weight:500;}
+.spec-val.green{color:#4ade80;}
+.spec-val.red{color:var(--accent);}
+.contact-section{background:var(--g900);text-align:center;position:relative;overflow:hidden;}
+.contact-glow{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:800px;height:400px;background:radial-gradient(ellipse, rgba(226,75,74,0.07) 0%, transparent 70%);pointer-events:none;}
+.contact-inner{max-width:640px;margin:0 auto;position:relative;}
+.contact-big{font-family:'Rajdhani',sans-serif;font-size:clamp(3rem,10vw,7rem);font-weight:700;color:var(--white);line-height:0.9;letter-spacing:-0.03em;margin-bottom:1.5rem;}
+.contact-big span{color:var(--accent);}
+.contact-sub{font-size:1rem;color:var(--g400);line-height:1.7;margin-bottom:3rem;max-width:480px;margin-left:auto;margin-right:auto;}
+.contact-card{background:var(--g700);border:1px solid rgba(226,75,74,0.2);border-radius:4px;padding:2.5rem;position:relative;overflow:hidden;}
+.contact-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg, transparent, var(--accent), transparent);}
+.contact-label{font-family:'Share Tech Mono',monospace;font-size:11px;color:var(--g400);letter-spacing:0.15em;text-transform:uppercase;margin-bottom:1rem;}
+.discord-handle{font-family:'Rajdhani',sans-serif;font-size:2.2rem;font-weight:700;color:var(--accent);margin-bottom:0.5rem;}
+.contact-note{font-size:12px;color:var(--g400);font-family:'Share Tech Mono',monospace;}
+footer{background:var(--g800);padding:2rem 3rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;border-top:1px solid rgba(255,255,255,0.04);}
+.footer-logo{font-family:'Rajdhani',sans-serif;font-weight:700;color:var(--g400);font-size:1rem;letter-spacing:0.05em;}
+.footer-logo span{color:var(--accent);}
+.footer-right{font-size:11px;color:var(--g400);font-family:'Share Tech Mono',monospace;letter-spacing:0.08em;}
+.divider{height:1px;background:linear-gradient(90deg, transparent, rgba(226,75,74,0.3), transparent);margin:0;}
 </style>
 </head>
 <body>
 
-<section class="hero">
-  <div class="hero-bg"></div>
-  <div class="grid-overlay"></div>
-  <div class="status-pill"><div class="dot"></div>Available for projects</div>
-  <p class="hero-tag">// Lua Game Developer</p>
-  <h1>BUILD<br/>ANYTHING<br/>IN <span>ROBLOX</span></h1>
-  <p class="hero-sub">5 years of crafting high-performance game systems — from fluid combat engines to physics-based cloth simulation. I build games that feel alive.</p>
-  <div class="hero-stats">
-    <div class="stat"><div class="stat-num">5<span>+</span></div><div class="stat-label">Years Experience</div></div>
-    <div class="stat"><div class="stat-num">10<span>+</span></div><div class="stat-label">Projects Shipped</div></div>
-    <div class="stat"><div class="stat-num">100<span>k+</span></div><div class="stat-label">Lines of Lua</div></div>
+<nav>
+  <div class="nav-logo">KING<span>CODER</span></div>
+  <div class="nav-links">
+    <a href="#skills">Skills</a>
+    <a href="#projects">Projects</a>
+    <a href="#about">About</a>
+    <a href="#contact">Contact</a>
   </div>
-  <div class="cta-row">
-    <a class="btn btn-primary" href="#contact">Hire Me</a>
-    <a class="btn btn-outline" href="#projects">View Projects</a>
+  <div class="nav-badge"><div class="nav-dot"></div>Available Now</div>
+</nav>
+
+<section class="hero">
+  <div class="hero-glow-1"></div>
+  <div class="hero-glow-2"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-eyebrow">
+    <div class="hero-line"></div>
+    <div class="hero-eyebrow-text">Lua · Roblox · Game Systems</div>
+  </div>
+  <div class="hero-name">KingCoder — jayden_79767</div>
+  <h1>SCRIPT<br/><span class="outline">ANY</span><span class="accent">THING.</span></h1>
+  <p class="hero-desc">5 years building the systems that make games feel alive — combat that hits hard, movement that flows, abilities that pop. If it runs in Roblox, I can build it.</p>
+  <div class="hero-stats">
+    <div class="stat"><div class="stat-num">5<sup>+</sup></div><div class="stat-label">Years Scripting</div></div>
+    <div class="stat-divider"></div>
+    <div class="stat"><div class="stat-num">2<sup>+</sup></div><div class="stat-label">Games Shipped</div></div>
+    <div class="stat-divider"></div>
+    <div class="stat"><div class="stat-num">6<sup>+</sup></div><div class="stat-label">Core Systems Built</div></div>
+  </div>
+  <div class="hero-cta">
+    <a class="btn btn-primary" href="#contact">Hire Me <span class="btn-arrow">→</span></a>
+    <a class="btn btn-ghost" href="#projects">View Work</a>
   </div>
 </section>
+
+<div class="marquee-wrap">
+  <div class="marquee-track">
+    <div class="marquee-item"><span>Combat Systems</span><div class="marquee-dot"></div><span>Movement Systems</span><div class="marquee-dot"></div><span>Ability Systems</span><div class="marquee-dot"></div><span>Ragdoll Physics</span><div class="marquee-dot"></div><span>Cloth Simulation</span><div class="marquee-dot"></div><span>Game Architecture</span><div class="marquee-dot"></div><span>Anti-Cheat</span><div class="marquee-dot"></div><span>Networking</span><div class="marquee-dot"></div></div>
+    <div class="marquee-item"><span>Combat Systems</span><div class="marquee-dot"></div><span>Movement Systems</span><div class="marquee-dot"></div><span>Ability Systems</span><div class="marquee-dot"></div><span>Ragdoll Physics</span><div class="marquee-dot"></div><span>Cloth Simulation</span><div class="marquee-dot"></div><span>Game Architecture</span><div class="marquee-dot"></div><span>Anti-Cheat</span><div class="marquee-dot"></div><span>Networking</span><div class="marquee-dot"></div></div>
+  </div>
+</div>
+
+<div class="divider"></div>
 
 <section class="skills-section" id="skills">
-  <p class="section-tag">// 01 — Expertise</p>
-  <h2>What I Build</h2>
-  <div class="section-line"></div>
+  <div class="skills-bg"></div>
+  <div class="section-header">
+    <div class="section-eyebrow">01 — Expertise</div>
+    <h2>WHAT I <span>BUILD</span></h2>
+  </div>
   <div class="skills-grid">
     <div class="skill-card">
-      <div class="skill-icon">⚔️</div>
+      <div class="skill-num">01</div>
+      <div class="skill-icon-wrap">⚔️</div>
       <div class="skill-name">Combat Systems</div>
-      <div class="skill-desc">Hitboxes, combos, block/parry mechanics, ability cooldowns, and responsive feel tuned for competitive play.</div>
-      <div class="skill-bar-bg"><div class="skill-bar" style="width:95%"></div></div>
+      <div class="skill-desc">Hitboxes, combo chains, parry & block mechanics, PVP balancing, and frame-perfect responsiveness tuned for competitive play.</div>
+      <div class="skill-bar-wrap"><div class="skill-bar-label"><span>Proficiency</span><span>95%</span></div><div class="skill-bar-bg"><div class="skill-bar" style="width:95%"></div></div></div>
     </div>
     <div class="skill-card">
-      <div class="skill-icon">🏃</div>
+      <div class="skill-num">02</div>
+      <div class="skill-icon-wrap">🏃</div>
       <div class="skill-name">Movement Systems</div>
-      <div class="skill-desc">Wall-running, dashing, flight, custom character controllers — smooth, responsive, and cheat-resistant.</div>
-      <div class="skill-bar-bg"><div class="skill-bar" style="width:93%"></div></div>
+      <div class="skill-desc">Custom character controllers, wall-running, dashing, flight, ledge-grabs — fluid, responsive, and fully cheat-resistant.</div>
+      <div class="skill-bar-wrap"><div class="skill-bar-label"><span>Proficiency</span><span>93%</span></div><div class="skill-bar-bg"><div class="skill-bar" style="width:93%"></div></div></div>
     </div>
     <div class="skill-card">
-      <div class="skill-icon">✨</div>
+      <div class="skill-num">03</div>
+      <div class="skill-icon-wrap">✨</div>
       <div class="skill-name">Ability Systems</div>
-      <div class="skill-desc">Modular, data-driven ability frameworks supporting unique powers, cooldowns, and visual effects.</div>
-      <div class="skill-bar-bg"><div class="skill-bar" style="width:90%"></div></div>
+      <div class="skill-desc">Modular, data-driven ability frameworks supporting unique powers, cooldown management, VFX hooks, and scalable expansion.</div>
+      <div class="skill-bar-wrap"><div class="skill-bar-label"><span>Proficiency</span><span>90%</span></div><div class="skill-bar-bg"><div class="skill-bar" style="width:90%"></div></div></div>
     </div>
     <div class="skill-card">
-      <div class="skill-icon">🧍</div>
+      <div class="skill-num">04</div>
+      <div class="skill-icon-wrap">🧍</div>
       <div class="skill-name">Ragdoll Systems</div>
-      <div class="skill-desc">Dynamic ragdolling on death/knockback with smooth transitions back to animation state.</div>
-      <div class="skill-bar-bg"><div class="skill-bar" style="width:88%"></div></div>
+      <div class="skill-desc">Dynamic ragdolling on knockback and death events, with smooth blending back to animation state and physics-accurate reactions.</div>
+      <div class="skill-bar-wrap"><div class="skill-bar-label"><span>Proficiency</span><span>88%</span></div><div class="skill-bar-bg"><div class="skill-bar" style="width:88%"></div></div></div>
     </div>
     <div class="skill-card">
-      <div class="skill-icon">🌊</div>
+      <div class="skill-num">05</div>
+      <div class="skill-icon-wrap">🌊</div>
       <div class="skill-name">Physics & Cloth</div>
-      <div class="skill-desc">Cape simulation, cloth physics, and particle-driven effects that add life and weight to characters.</div>
-      <div class="skill-bar-bg"><div class="skill-bar" style="width:85%"></div></div>
+      <div class="skill-desc">Cape simulation, cloth physics, wind effects — particle-driven details that add real weight and life to characters in motion.</div>
+      <div class="skill-bar-wrap"><div class="skill-bar-label"><span>Proficiency</span><span>85%</span></div><div class="skill-bar-bg"><div class="skill-bar" style="width:85%"></div></div></div>
     </div>
     <div class="skill-card">
-      <div class="skill-icon">🔧</div>
-      <div class="skill-name">Game Architecture</div>
-      <div class="skill-desc">Scalable OOP frameworks, server/client networking, anti-cheat, and performance optimization.</div>
-      <div class="skill-bar-bg"><div class="skill-bar" style="width:92%"></div></div>
+      <div class="skill-num">06</div>
+      <div class="skill-icon-wrap">🔧</div>
+      <div class="skill-name">Architecture & Net</div>
+      <div class="skill-desc">Scalable OOP game frameworks, server-authoritative networking, RemoteEvent architecture, anti-cheat, and performance tuning.</div>
+      <div class="skill-bar-wrap"><div class="skill-bar-label"><span>Proficiency</span><span>92%</span></div><div class="skill-bar-bg"><div class="skill-bar" style="width:92%"></div></div></div>
     </div>
   </div>
 </section>
+
+<div class="divider"></div>
 
 <section class="projects-section" id="projects">
-  <p class="section-tag">// 02 — Portfolio</p>
-  <h2>Past Projects</h2>
-  <div class="section-line"></div>
+  <div class="section-header">
+    <div class="section-eyebrow">02 — Portfolio</div>
+    <h2>SHIPPED <span>WORK</span></h2>
+  </div>
   <div class="projects-grid">
     <div class="project-card">
-      <div class="project-header">
-        <div class="project-type">PVP Fighting Game</div>
-        <div class="project-name">Project Striker</div>
-        <div class="project-desc">Built the full combat engine including hitbox detection, combo chains, and a 12-ability system. Handled server-authoritative networking for competitive fairness.</div>
-      </div>
-      <div class="project-footer">
-        <span class="tag">Combat</span><span class="tag">Networking</span><span class="tag">Abilities</span>
-      </div>
-    </div>
-    <div class="project-card">
-      <div class="project-header">
-        <div class="project-type">Open World Adventure</div>
-        <div class="project-name">Apex World</div>
-        <div class="project-desc">Designed and built the full movement system — wall-run, ledge-grab, air dash, and flight — plus dynamic NPC AI and a modular quest system.</div>
-      </div>
-      <div class="project-footer">
-        <span class="tag">Movement</span><span class="tag">AI</span><span class="tag">Open World</span>
+      <div class="project-img"><div class="project-img-bg"></div>🖱️</div>
+      <div class="project-body">
+        <div class="project-type">Clicker Game · Roblox</div>
+        <div class="project-name">Jump Clicker</div>
+        <div class="project-desc">Scripted the core gameplay loop, progression and upgrade systems, data persistence, and leaderboard mechanics. Focused on smooth performance at high player counts.</div>
+        <div class="project-tags"><span class="tag">Gameplay</span><span class="tag">Progression</span><span class="tag">DataStore</span><span class="tag">Leaderboards</span></div>
       </div>
     </div>
     <div class="project-card">
-      <div class="project-header">
-        <div class="project-type">Superhero Roleplay</div>
-        <div class="project-name">HeroSim RP</div>
-        <div class="project-desc">Created cloth/cape physics simulation, ragdoll systems, and a full power-selection UI with 30+ unique superhero abilities all built modularly.</div>
-      </div>
-      <div class="project-footer">
-        <span class="tag">Cloth Physics</span><span class="tag">Ragdoll</span><span class="tag">Abilities</span>
+      <div class="project-img"><div class="project-img-bg"></div>🧱</div>
+      <div class="project-body">
+        <div class="project-type">Obby · Platformer · Roblox</div>
+        <div class="project-name">Easy To Hard Wall Hop Obby 2</div>
+        <div class="project-desc">Built the full movement and obstacle system — custom player physics, checkpoint logic, difficulty scaling, and anti-exploit measures throughout.</div>
+        <div class="project-tags"><span class="tag">Movement</span><span class="tag">Physics</span><span class="tag">Checkpoints</span><span class="tag">Anti-Exploit</span></div>
       </div>
     </div>
   </div>
 </section>
+
+<div class="divider"></div>
 
 <section class="about-section" id="about">
-  <p class="section-tag">// 03 — About</p>
-  <h2>Who I Am</h2>
-  <div class="section-line"></div>
+  <div class="section-header">
+    <div class="section-eyebrow">03 — About</div>
+    <h2>WHO I <span>AM</span></h2>
+  </div>
   <div class="about-grid">
-    <div class="about-text">
-      <p>I'm a dedicated Lua/Roblox game developer with over 5 years of hands-on experience building full-scale game systems from the ground up. I specialize in combat, movement, and ability systems — the core mechanics that make a game actually feel good to play.</p>
-      <p>I take pride in writing clean, modular, maintainable code that's built to scale. Whether it's a small indie project or a full commercial game, I bring the same level of care and craftsmanship to every system I build.</p>
-      <p>I'm easy to communicate with, deadline-oriented, and always open to feedback. If you need someone who can handle an entire game's scripting needs, I'm your person.</p>
+    <div>
+      <div class="about-quote">"I don't just write code — I build the systems that make a game feel real."</div>
+      <div class="about-text">
+        <p>I'm KingCoder — a dedicated Lua and Roblox game developer with 5+ years of experience building full-scale game systems from scratch. I've been scripting since I was young and it's more than a skill, it's how I think.</p>
+        <p>I specialize in the systems that players feel most — combat that responds instantly, movement that flows naturally, abilities that look and feel powerful. The difference between a good game and a great one is in these details, and that's where I focus.</p>
+        <p>I'm easy to work with, communicate clearly, and take deadlines seriously. Whether you need one system or an entire game built from the ground up, I deliver.</p>
+      </div>
     </div>
     <div>
-      <div class="spec-row"><span class="spec-key">Experience</span><span class="spec-val">5+ Years</span></div>
-      <div class="spec-row"><span class="spec-key">Primary Language</span><span class="spec-val">Lua / Luau</span></div>
-      <div class="spec-row"><span class="spec-key">Platform</span><span class="spec-val">Roblox Studio</span></div>
-      <div class="spec-row"><span class="spec-key">Speciality</span><span class="spec-val">PVP & Fighting Games</span></div>
-      <div class="spec-row"><span class="spec-key">Communication</span><span class="spec-val green">✓ Responsive</span></div>
-      <div class="spec-row"><span class="spec-key">Availability</span><span class="spec-val green">✓ Open to Work</span></div>
+      <div class="specs-card">
+        <div class="specs-header">// Developer Profile</div>
+        <div class="spec-row"><span class="spec-key">Handle</span><span class="spec-val red">jayden_79767</span></div>
+        <div class="spec-row"><span class="spec-key">Experience</span><span class="spec-val">5+ Years</span></div>
+        <div class="spec-row"><span class="spec-key">Language</span><span class="spec-val">Lua / Luau</span></div>
+        <div class="spec-row"><span class="spec-key">Platform</span><span class="spec-val">Roblox Studio</span></div>
+        <div class="spec-row"><span class="spec-key">Speciality</span><span class="spec-val">Combat & PVP Systems</span></div>
+        <div class="spec-row"><span class="spec-key">Communication</span><span class="spec-val green">● Responsive</span></div>
+        <div class="spec-row"><span class="spec-key">Availability</span><span class="spec-val green">● Open to Work</span></div>
+      </div>
     </div>
   </div>
 </section>
 
+<div class="divider"></div>
+
 <section class="contact-section" id="contact">
+  <div class="contact-glow"></div>
   <div class="contact-inner">
-    <p class="section-tag">// 04 — Contact</p>
-    <h2>Let's Work Together</h2>
-    <div class="section-line" style="margin:1rem auto 2rem;"></div>
-    <p class="contact-sub">Have a project in mind? Reach out and let's talk. I'm currently available for full game development contracts.</p>
-    <div class="contact-box">
-      <p style="font-size:13px;color:#888780;margin-bottom:0.5rem;font-family:'Share Tech Mono',monospace;">// reach me on discord</p>
-      <div class="discord-handle">YourDiscord#0000</div>
-      <p class="contact-note">Replace with your actual Discord tag</p>
+    <div class="section-eyebrow" style="justify-content:center;">04 — Contact</div>
+    <div class="contact-big">LET'S<br/><span>BUILD.</span></div>
+    <p class="contact-sub">Got a project that needs a serious scripter? I'm available for full game development contracts and individual system builds. Let's talk.</p>
+    <div class="contact-card">
+      <div class="contact-label">// Find me on Discord</div>
+      <div class="discord-handle">jayden_79767</div>
+      <div class="contact-note">DM me and I'll respond fast — let's get to work.</div>
     </div>
   </div>
 </section>
 
 <footer>
-  <div class="footer-name">LUA DEV PORTFOLIO</div>
-  <div class="footer-copy">© 2025</div>
+  <div class="footer-logo">KING<span>CODER</span></div>
+  <div class="footer-right">© 2025 · Lua / Roblox Developer · All rights reserved</div>
 </footer>
 
 </body>
