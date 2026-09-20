@@ -1,319 +1,662 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>KingCoder — Lua Developer</title>
-<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Share+Tech+Mono&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>NULL — Roblox Luau Scripter</title>
+<meta name="description" content="NULL — Roblox Luau scripter specializing in combat, abilities, gameplay systems, data, networking and optimization.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Rajdhani:wght@500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+
 <style>
-*{margin:0;padding:0;box-sizing:border-box;}
 :root{
-  --accent:#E24B4A;
-  --accent2:#F09595;
-  --accent-dim:rgba(226,75,74,0.15);
-  --accent-border:rgba(226,75,74,0.3);
-  --g900:#07070a;
-  --g800:#0e0e14;
-  --g700:#15151e;
-  --g600:#1e1e2a;
-  --g500:#2a2a38;
-  --g400:#888799;
-  --g200:#b4b2c8;
-  --g100:#d3d1e8;
-  --white:#f0efff;
+  --bg:#070708;
+  --panel:#0d0d10;
+  --panel2:#111116;
+  --text:#f2f2f4;
+  --muted:#8b8b95;
+  --red:#e24b4a;
+  --red2:#ff6866;
+  --line:#222228;
+  --mono:"Share Tech Mono",monospace;
+  --head:"Rajdhani",sans-serif;
+  --body:"Inter",sans-serif;
 }
-html{scroll-behavior:smooth;}
-body{background:var(--g900);color:var(--g100);font-family:'Inter',sans-serif;overflow-x:hidden;}
-::-webkit-scrollbar{width:4px;}
-::-webkit-scrollbar-track{background:var(--g900);}
-::-webkit-scrollbar-thumb{background:var(--accent);border-radius:2px;}
-nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:1.25rem 3rem;display:flex;justify-content:space-between;align-items:center;background:rgba(7,7,10,0.85);backdrop-filter:blur(20px);border-bottom:1px solid rgba(226,75,74,0.08);}
-.nav-logo{font-family:'Rajdhani',sans-serif;font-size:1.4rem;font-weight:700;color:var(--white);letter-spacing:0.05em;}
-.nav-logo span{color:var(--accent);}
-.nav-links{display:flex;gap:2.5rem;}
-.nav-links a{font-family:'Share Tech Mono',monospace;font-size:11px;color:var(--g400);text-decoration:none;letter-spacing:0.12em;text-transform:uppercase;transition:color 0.2s;}
-.nav-links a:hover{color:var(--accent);}
-.nav-badge{font-family:'Share Tech Mono',monospace;font-size:11px;color:var(--accent2);background:var(--accent-dim);border:1px solid var(--accent-border);padding:5px 14px;border-radius:100px;display:flex;align-items:center;gap:7px;}
-.nav-dot{width:6px;height:6px;background:#4ade80;border-radius:50%;animation:blink 2s infinite;}
-@keyframes blink{0%,100%{opacity:1;}50%{opacity:0.3;}}
-.hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:8rem 3rem 4rem;position:relative;overflow:hidden;}
-.hero-glow-1{position:absolute;top:-20%;right:-10%;width:700px;height:700px;border-radius:50%;background:radial-gradient(circle, rgba(226,75,74,0.08) 0%, transparent 70%);pointer-events:none;}
-.hero-glow-2{position:absolute;bottom:-30%;left:-10%;width:600px;height:600px;border-radius:50%;background:radial-gradient(circle, rgba(226,75,74,0.05) 0%, transparent 70%);pointer-events:none;}
-.hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(226,75,74,0.03) 1px, transparent 1px),linear-gradient(90deg, rgba(226,75,74,0.03) 1px, transparent 1px);background-size:60px 60px;mask-image:radial-gradient(ellipse 80% 80% at 50% 50%, black 30%, transparent 100%);pointer-events:none;}
-.hero-eyebrow{display:flex;align-items:center;gap:12px;margin-bottom:2rem;}
-.hero-line{width:40px;height:1px;background:var(--accent);}
-.hero-eyebrow-text{font-family:'Share Tech Mono',monospace;font-size:11px;color:var(--accent);letter-spacing:0.2em;text-transform:uppercase;}
-.hero-name{font-family:'Rajdhani',sans-serif;font-size:clamp(1rem,3vw,1.4rem);font-weight:500;color:var(--g400);letter-spacing:0.3em;text-transform:uppercase;margin-bottom:0.5rem;}
-h1{font-family:'Rajdhani',sans-serif;font-size:clamp(4rem,12vw,9rem);font-weight:700;line-height:0.85;color:var(--white);letter-spacing:-0.03em;margin-bottom:2.5rem;position:relative;}
-h1 .accent{color:var(--accent);}
-h1 .outline{-webkit-text-stroke:2px var(--white);color:transparent;}
-.hero-desc{font-size:1.1rem;color:var(--g200);max-width:560px;line-height:1.8;font-weight:300;margin-bottom:3rem;border-left:2px solid var(--accent);padding-left:1.5rem;}
-.hero-stats{display:flex;gap:3rem;margin-bottom:3.5rem;flex-wrap:wrap;}
-.stat{position:relative;}
-.stat-num{font-family:'Rajdhani',sans-serif;font-size:2.8rem;font-weight:700;color:var(--white);line-height:1;}
-.stat-num sup{color:var(--accent);font-size:1.5rem;}
-.stat-label{font-family:'Share Tech Mono',monospace;font-size:10px;color:var(--g400);letter-spacing:0.15em;text-transform:uppercase;margin-top:4px;}
-.stat-divider{width:1px;background:rgba(255,255,255,0.08);align-self:stretch;}
-.hero-cta{display:flex;gap:1rem;flex-wrap:wrap;}
-.btn{padding:14px 32px;border-radius:3px;font-size:13px;font-weight:600;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:8px;letter-spacing:0.08em;text-transform:uppercase;transition:all 0.25s;font-family:'Share Tech Mono',monospace;}
-.btn-primary{background:var(--accent);color:#fff;box-shadow:0 0 30px rgba(226,75,74,0.3);}
-.btn-primary:hover{background:#c93f3e;box-shadow:0 0 40px rgba(226,75,74,0.5);transform:translateY(-2px);}
-.btn-ghost{background:transparent;color:var(--g200);border:1px solid rgba(255,255,255,0.15);}
-.btn-ghost:hover{border-color:var(--accent);color:var(--accent);transform:translateY(-2px);}
-.btn-arrow{font-size:16px;transition:transform 0.2s;}
-.btn-primary:hover .btn-arrow{transform:translateX(4px);}
-.marquee-wrap{background:var(--g800);border-top:1px solid rgba(255,255,255,0.05);border-bottom:1px solid rgba(255,255,255,0.05);padding:1rem 0;overflow:hidden;}
-.marquee-track{display:flex;gap:0;animation:marquee 20s linear infinite;width:max-content;}
-@keyframes marquee{from{transform:translateX(0);}to{transform:translateX(-50%);}}
-.marquee-item{font-family:'Share Tech Mono',monospace;font-size:12px;color:var(--g400);letter-spacing:0.15em;text-transform:uppercase;padding:0 2rem;display:flex;align-items:center;gap:2rem;white-space:nowrap;}
-.marquee-dot{width:4px;height:4px;background:var(--accent);border-radius:50%;flex-shrink:0;}
-section{padding:7rem 3rem;}
-.section-header{margin-bottom:4rem;}
-.section-eyebrow{font-family:'Share Tech Mono',monospace;font-size:11px;color:var(--accent);letter-spacing:0.2em;text-transform:uppercase;margin-bottom:1rem;display:flex;align-items:center;gap:10px;}
-.section-eyebrow::before{content:'';display:block;width:20px;height:1px;background:var(--accent);}
-h2{font-family:'Rajdhani',sans-serif;font-size:clamp(2rem,5vw,4rem);font-weight:700;color:var(--white);line-height:0.95;letter-spacing:-0.02em;}
-h2 span{color:var(--accent);}
-.skills-section{background:var(--g800);position:relative;overflow:hidden;}
-.skills-bg{position:absolute;right:-200px;top:50%;transform:translateY(-50%);width:600px;height:600px;border-radius:50%;background:radial-gradient(circle, rgba(226,75,74,0.04) 0%, transparent 70%);pointer-events:none;}
-.skills-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.04);}
-@media(max-width:900px){.skills-grid{grid-template-columns:repeat(2,1fr);}}
-@media(max-width:600px){.skills-grid{grid-template-columns:1fr;}}
-.skill-card{background:var(--g800);padding:2.5rem;display:flex;flex-direction:column;gap:1rem;transition:background 0.3s;position:relative;overflow:hidden;}
-.skill-card::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg, rgba(226,75,74,0.05) 0%, transparent 60%);opacity:0;transition:opacity 0.3s;}
-.skill-card:hover{background:var(--g700);}
-.skill-card:hover::before{opacity:1;}
-.skill-num{font-family:'Share Tech Mono',monospace;font-size:11px;color:rgba(226,75,74,0.4);letter-spacing:0.1em;}
-.skill-icon-wrap{width:48px;height:48px;border-radius:6px;background:var(--accent-dim);border:1px solid var(--accent-border);display:flex;align-items:center;justify-content:center;font-size:22px;}
-.skill-name{font-family:'Rajdhani',sans-serif;font-size:1.25rem;font-weight:700;color:var(--white);}
-.skill-desc{font-size:13px;color:var(--g400);line-height:1.7;}
-.skill-bar-wrap{margin-top:auto;padding-top:1rem;}
-.skill-bar-label{display:flex;justify-content:space-between;font-family:'Share Tech Mono',monospace;font-size:10px;color:var(--g400);margin-bottom:6px;letter-spacing:0.1em;}
-.skill-bar-bg{height:2px;background:rgba(255,255,255,0.06);border-radius:1px;}
-.skill-bar{height:100%;background:linear-gradient(90deg, var(--accent), var(--accent2));border-radius:1px;}
-.projects-section{background:var(--g900);}
-.projects-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1.5rem;}
-@media(max-width:700px){.projects-grid{grid-template-columns:1fr;}}
-.project-card{background:var(--g700);border:1px solid rgba(255,255,255,0.05);border-radius:4px;overflow:hidden;transition:all 0.3s;position:relative;}
-.project-card::after{content:'';position:absolute;inset:0;border:1px solid var(--accent);border-radius:4px;opacity:0;transition:opacity 0.3s;}
-.project-card:hover{transform:translateY(-4px);background:var(--g600);}
-.project-card:hover::after{opacity:0.4;}
-.project-img{height:180px;background:var(--g600);display:flex;align-items:center;justify-content:center;font-size:4rem;position:relative;overflow:hidden;border-bottom:1px solid rgba(255,255,255,0.05);}
-.project-img-bg{position:absolute;inset:0;background:linear-gradient(135deg, rgba(226,75,74,0.08) 0%, transparent 60%);}
-.project-body{padding:1.75rem;}
-.project-type{font-family:'Share Tech Mono',monospace;font-size:10px;color:var(--accent);letter-spacing:0.15em;text-transform:uppercase;margin-bottom:0.6rem;}
-.project-name{font-family:'Rajdhani',sans-serif;font-size:1.5rem;font-weight:700;color:var(--white);margin-bottom:0.75rem;}
-.project-desc{font-size:13px;color:var(--g400);line-height:1.7;margin-bottom:1.25rem;}
-.project-tags{display:flex;gap:0.5rem;flex-wrap:wrap;}
-.tag{font-size:11px;padding:4px 12px;border-radius:2px;background:var(--accent-dim);color:var(--accent2);font-family:'Share Tech Mono',monospace;letter-spacing:0.05em;border:1px solid var(--accent-border);}
-.about-section{background:var(--g800);position:relative;}
-.about-grid{display:grid;grid-template-columns:1.2fr 1fr;gap:5rem;align-items:start;}
-@media(max-width:800px){.about-grid{grid-template-columns:1fr;gap:3rem;}}
-.about-text{font-size:1rem;color:var(--g200);line-height:1.9;font-weight:300;}
-.about-text p+p{margin-top:1.25rem;}
-.about-quote{font-family:'Rajdhani',sans-serif;font-size:1.5rem;font-weight:600;color:var(--white);line-height:1.4;border-left:3px solid var(--accent);padding-left:1.5rem;margin-bottom:2rem;}
-.specs-card{background:var(--g700);border:1px solid rgba(255,255,255,0.06);border-radius:4px;overflow:hidden;}
-.specs-header{padding:1rem 1.5rem;background:var(--accent-dim);border-bottom:1px solid var(--accent-border);font-family:'Share Tech Mono',monospace;font-size:11px;color:var(--accent);letter-spacing:0.15em;text-transform:uppercase;}
-.spec-row{display:flex;justify-content:space-between;align-items:center;padding:0.9rem 1.5rem;border-bottom:1px solid rgba(255,255,255,0.04);font-size:13px;}
-.spec-row:last-child{border-bottom:none;}
-.spec-key{color:var(--g400);font-family:'Share Tech Mono',monospace;font-size:10px;letter-spacing:0.1em;text-transform:uppercase;}
-.spec-val{color:var(--white);font-weight:500;}
-.spec-val.green{color:#4ade80;}
-.spec-val.red{color:var(--accent);}
-.contact-section{background:var(--g900);text-align:center;position:relative;overflow:hidden;}
-.contact-glow{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:800px;height:400px;background:radial-gradient(ellipse, rgba(226,75,74,0.07) 0%, transparent 70%);pointer-events:none;}
-.contact-inner{max-width:640px;margin:0 auto;position:relative;}
-.contact-big{font-family:'Rajdhani',sans-serif;font-size:clamp(3rem,10vw,7rem);font-weight:700;color:var(--white);line-height:0.9;letter-spacing:-0.03em;margin-bottom:1.5rem;}
-.contact-big span{color:var(--accent);}
-.contact-sub{font-size:1rem;color:var(--g400);line-height:1.7;margin-bottom:3rem;max-width:480px;margin-left:auto;margin-right:auto;}
-.contact-card{background:var(--g700);border:1px solid rgba(226,75,74,0.2);border-radius:4px;padding:2.5rem;position:relative;overflow:hidden;}
-.contact-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg, transparent, var(--accent), transparent);}
-.contact-label{font-family:'Share Tech Mono',monospace;font-size:11px;color:var(--g400);letter-spacing:0.15em;text-transform:uppercase;margin-bottom:1rem;}
-.discord-handle{font-family:'Rajdhani',sans-serif;font-size:2.2rem;font-weight:700;color:var(--accent);margin-bottom:0.5rem;}
-.contact-note{font-size:12px;color:var(--g400);font-family:'Share Tech Mono',monospace;}
-footer{background:var(--g800);padding:2rem 3rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;border-top:1px solid rgba(255,255,255,0.04);}
-.footer-logo{font-family:'Rajdhani',sans-serif;font-weight:700;color:var(--g400);font-size:1rem;letter-spacing:0.05em;}
-.footer-logo span{color:var(--accent);}
-.footer-right{font-size:11px;color:var(--g400);font-family:'Share Tech Mono',monospace;letter-spacing:0.08em;}
-.divider{height:1px;background:linear-gradient(90deg, transparent, rgba(226,75,74,0.3), transparent);margin:0;}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:var(--body);
+  line-height:1.6;
+  overflow-x:hidden;
+}
+body:before{
+  content:"";
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  opacity:.035;
+  background:repeating-linear-gradient(0deg,transparent 0,transparent 2px,#fff 3px);
+  z-index:10;
+}
+a{color:inherit;text-decoration:none}
+.container{width:min(1120px,92%);margin:auto}
+.nav{
+  height:76px;
+  border-bottom:1px solid var(--line);
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  position:sticky;
+  top:0;
+  background:rgba(7,7,8,.88);
+  backdrop-filter:blur(12px);
+  z-index:20;
+}
+.logo{
+  font:700 27px var(--head);
+  letter-spacing:2px;
+}
+.logo span{color:var(--red)}
+.navlinks{display:flex;gap:30px;font-size:13px;color:#aaa}
+.navlinks a{transition:.2s}
+.navlinks a:hover{color:#fff}
+.status{
+  border:1px solid #263f2c;
+  background:#0b120d;
+  color:#74d98a;
+  padding:7px 11px;
+  border-radius:4px;
+  font:12px var(--mono);
+}
+.status i{
+  display:inline-block;
+  width:6px;height:6px;
+  border-radius:50%;
+  background:#5ee47a;
+  margin-right:7px;
+  box-shadow:0 0 8px #5ee47a;
+}
+
+.hero{
+  min-height:650px;
+  display:flex;
+  align-items:center;
+  position:relative;
+  border-bottom:1px solid var(--line);
+}
+.hero:after{
+  content:"";
+  position:absolute;
+  width:520px;height:520px;
+  right:-170px;top:40px;
+  background:radial-gradient(circle,rgba(226,75,74,.14),transparent 68%);
+  pointer-events:none;
+}
+.eyebrow{
+  color:var(--red);
+  font:14px var(--mono);
+  margin-bottom:18px;
+}
+.hero h1{
+  font:700 clamp(65px,10vw,125px)/.78 var(--head);
+  letter-spacing:-4px;
+  margin-left:-6px;
+}
+.hero h1 span{color:var(--red)}
+.hero h2{
+  margin-top:28px;
+  font:700 clamp(35px,6vw,70px)/.9 var(--head);
+  letter-spacing:1px;
+}
+.hero p{
+  max-width:650px;
+  color:var(--muted);
+  margin-top:24px;
+  font-size:15px;
+}
+.buttons{display:flex;gap:12px;margin-top:30px}
+.btn{
+  padding:12px 20px;
+  border:1px solid var(--line);
+  font-size:13px;
+  font-weight:600;
+  transition:.2s;
+}
+.btn.primary{background:var(--red);border-color:var(--red);color:#fff}
+.btn:hover{transform:translateY(-2px);border-color:var(--red)}
+.btn.primary:hover{background:var(--red2)}
+.stats{
+  display:flex;
+  gap:45px;
+  margin-top:55px;
+}
+.stat strong{
+  display:block;
+  font:700 28px var(--head);
+}
+.stat small{
+  color:#666;
+  text-transform:uppercase;
+  letter-spacing:1px;
+  font-size:9px;
+}
+
+.marquee{
+  border-bottom:1px solid var(--line);
+  overflow:hidden;
+  white-space:nowrap;
+  padding:17px 0;
+  color:#68686f;
+  font:12px var(--mono);
+}
+.marquee div{
+  display:inline-block;
+  animation:move 25s linear infinite;
+}
+.marquee span{margin:0 28px}
+.marquee b{color:var(--red)}
+@keyframes move{to{transform:translateX(-50%)}}
+
+section{padding:100px 0}
+.section-top{
+  display:flex;
+  justify-content:space-between;
+  align-items:end;
+  margin-bottom:45px;
+}
+.label{font:12px var(--mono);color:var(--red)}
+.section-title{
+  font:700 48px var(--head);
+  letter-spacing:-1px;
+  margin-top:7px;
+}
+.section-desc{max-width:390px;color:var(--muted);font-size:13px}
+
+.grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:14px;
+}
+.card{
+  background:var(--panel);
+  border:1px solid var(--line);
+  padding:27px;
+  position:relative;
+  transition:.25s;
+}
+.card:hover{
+  transform:translateY(-4px);
+  border-color:#38383f;
+}
+.card:before{
+  content:"";
+  position:absolute;
+  top:-1px;left:25px;
+  width:35px;height:2px;
+  background:var(--red);
+}
+.icon{
+  font:20px var(--mono);
+  color:var(--red);
+  margin-bottom:22px;
+}
+.card h3{
+  font:700 24px var(--head);
+  margin-bottom:9px;
+}
+.card p{color:var(--muted);font-size:12px}
+.tags{
+  display:flex;
+  flex-wrap:wrap;
+  gap:6px;
+  margin-top:20px;
+}
+.tag{
+  border:1px solid var(--line);
+  color:#85858d;
+  padding:4px 7px;
+  font:9px var(--mono);
+}
+
+.projects{background:#09090b}
+.project{
+  padding:0;
+  overflow:hidden;
+}
+.project-top{
+  height:145px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:
+    linear-gradient(135deg,rgba(226,75,74,.08),transparent),
+    repeating-linear-gradient(45deg,#0c0c0f 0,#0c0c0f 10px,#101014 10px,#101014 11px);
+  border-bottom:1px solid var(--line);
+}
+.project-number{font:700 50px var(--head);color:#29292f}
+.project-body{padding:25px}
+.project h3{font:700 27px var(--head)}
+.project .type{font:10px var(--mono);color:var(--red);margin:5px 0 15px}
+.project p{color:var(--muted);font-size:12px}
+.project ul{
+  list-style:none;
+  margin-top:17px;
+  color:#999;
+  font-size:11px;
+}
+.project li{margin:7px 0}
+.project li:before{content:"→";color:var(--red);margin-right:8px}
+
+.about-grid{
+  display:grid;
+  grid-template-columns:1.2fr .8fr;
+  gap:50px;
+}
+.about h3{font:700 42px var(--head);margin-bottom:20px}
+.about p{color:var(--muted);font-size:14px;margin-bottom:16px}
+.profile{
+  border:1px solid var(--line);
+  background:var(--panel);
+}
+.profile-head{
+  padding:20px;
+  border-bottom:1px solid var(--line);
+  font:11px var(--mono);
+  color:var(--red);
+}
+.profile-row{
+  display:flex;
+  justify-content:space-between;
+  padding:13px 20px;
+  border-bottom:1px solid #19191e;
+  font-size:11px;
+}
+.profile-row span:first-child{color:#62626a}
+.profile-row span:last-child{color:#ddd}
+
+.contact{
+  text-align:center;
+  border-top:1px solid var(--line);
+  background:
+    radial-gradient(circle at center,rgba(226,75,74,.09),transparent 45%);
+}
+.contact h2{
+  font:700 clamp(50px,8vw,90px) var(--head);
+}
+.contact p{color:var(--muted);margin:15px auto 25px}
+.discord{
+  display:inline-block;
+  border:1px solid var(--line);
+  padding:14px 24px;
+  font:13px var(--mono);
+  transition:.2s;
+}
+.discord:hover{border-color:var(--red);color:var(--red)}
+
+footer{
+  border-top:1px solid var(--line);
+  padding:25px 0;
+  color:#555;
+  font:10px var(--mono);
+  display:flex;
+  justify-content:space-between;
+}
+footer span{color:var(--red)}
+
+@media(max-width:800px){
+  .navlinks{display:none}
+  .hero{min-height:590px}
+  .hero h1{font-size:70px}
+  .stats{gap:20px}
+  .grid{grid-template-columns:1fr 1fr}
+  .about-grid{grid-template-columns:1fr}
+  .section-top{display:block}
+  .section-desc{margin-top:15px}
+}
+@media(max-width:540px){
+  .status{display:none}
+  section{padding:70px 0}
+  .hero h1{font-size:62px;letter-spacing:-2px}
+  .hero h2{font-size:39px}
+  .hero p{font-size:13px}
+  .stats{flex-wrap:wrap;margin-top:40px}
+  .grid{grid-template-columns:1fr}
+  .section-title{font-size:40px}
+  .buttons{flex-wrap:wrap}
+}
 </style>
 </head>
+
 <body>
 
-<nav>
-  <div class="nav-logo">KING<span>CODER</span></div>
-  <div class="nav-links">
-    <a href="#skills">Skills</a>
-    <a href="#projects">Projects</a>
-    <a href="#about">About</a>
-    <a href="#contact">Contact</a>
+<nav class="nav">
+  <div class="container" style="display:flex;align-items:center;justify-content:space-between;width:100%">
+    <a class="logo" href="#">NULL<span>.</span></a>
+    <div class="navlinks">
+      <a href="#skills">Skills</a>
+      <a href="#systems">Systems</a>
+      <a href="#projects">Projects</a>
+      <a href="#about">About</a>
+      <a href="#contact">Contact</a>
+    </div>
+    <div class="status"><i></i>AVAILABLE</div>
   </div>
-  <div class="nav-badge"><div class="nav-dot"></div>Available Now</div>
 </nav>
 
-<section class="hero">
-  <div class="hero-glow-1"></div>
-  <div class="hero-glow-2"></div>
-  <div class="hero-grid"></div>
-  <div class="hero-eyebrow">
-    <div class="hero-line"></div>
-    <div class="hero-eyebrow-text">Lua · Roblox · Game Systems</div>
-  </div>
-  <div class="hero-name">KingCoder — jayden_79767</div>
-  <h1>SCRIPT<br/><span class="outline">ANY</span><span class="accent">THING.</span></h1>
-  <p class="hero-desc">5 years building the systems that make games feel alive — combat that hits hard, movement that flows, abilities that pop. If it runs in Roblox, I can build it.</p>
-  <div class="hero-stats">
-    <div class="stat"><div class="stat-num">5<sup>+</sup></div><div class="stat-label">Years Scripting</div></div>
-    <div class="stat-divider"></div>
-    <div class="stat"><div class="stat-num">2<sup>+</sup></div><div class="stat-label">Games Shipped</div></div>
-    <div class="stat-divider"></div>
-    <div class="stat"><div class="stat-num">6<sup>+</sup></div><div class="stat-label">Core Systems Built</div></div>
-  </div>
-  <div class="hero-cta">
-    <a class="btn btn-primary" href="#contact">Hire Me <span class="btn-arrow">→</span></a>
-    <a class="btn btn-ghost" href="#projects">View Work</a>
-  </div>
-</section>
+<header class="hero">
+  <div class="container">
+    <div class="eyebrow">// ROBLOX LUAU SCRIPTER — jayden_7714</div>
+    <h1>NULL<span>.</span></h1>
+    <h2>CODE THE<br>SYSTEMS.</h2>
+    <p>
+      Roblox Luau scripter focused on gameplay systems, combat mechanics,
+      abilities, player data, networking, and the code behind polished
+      and responsive experiences.
+    </p>
 
-<div class="marquee-wrap">
-  <div class="marquee-track">
-    <div class="marquee-item"><span>Combat Systems</span><div class="marquee-dot"></div><span>Movement Systems</span><div class="marquee-dot"></div><span>Ability Systems</span><div class="marquee-dot"></div><span>Ragdoll Physics</span><div class="marquee-dot"></div><span>Cloth Simulation</span><div class="marquee-dot"></div><span>Game Architecture</span><div class="marquee-dot"></div><span>Anti-Cheat</span><div class="marquee-dot"></div><span>Networking</span><div class="marquee-dot"></div></div>
-    <div class="marquee-item"><span>Combat Systems</span><div class="marquee-dot"></div><span>Movement Systems</span><div class="marquee-dot"></div><span>Ability Systems</span><div class="marquee-dot"></div><span>Ragdoll Physics</span><div class="marquee-dot"></div><span>Cloth Simulation</span><div class="marquee-dot"></div><span>Game Architecture</span><div class="marquee-dot"></div><span>Anti-Cheat</span><div class="marquee-dot"></div><span>Networking</span><div class="marquee-dot"></div></div>
+    <div class="buttons">
+      <a class="btn primary" href="#projects">VIEW PROJECTS</a>
+      <a class="btn" href="#contact">CONTACT ME</a>
+    </div>
+
+    <div class="stats">
+      <div class="stat"><strong>50+</strong><small>Systems Created</small></div>
+      <div class="stat"><strong>LUAU</strong><small>Main Language</small></div>
+      <div class="stat"><strong>100%</strong><small>Gameplay Focus</small></div>
+    </div>
+  </div>
+</header>
+
+<div class="marquee">
+  <div>
+    <span>COMBAT SYSTEMS <b>◆</b></span>
+    <span>ABILITY FRAMEWORKS <b>◆</b></span>
+    <span>PLAYER DATA <b>◆</b></span>
+    <span>NETWORKING <b>◆</b></span>
+    <span>GAMEPLAY LOGIC <b>◆</b></span>
+    <span>OPTIMIZATION <b>◆</b></span>
+    <span>NPC SYSTEMS <b>◆</b></span>
+    <span>UI LOGIC <b>◆</b></span>
+    <span>COMBAT SYSTEMS <b>◆</b></span>
+    <span>ABILITY FRAMEWORKS <b>◆</b></span>
+    <span>PLAYER DATA <b>◆</b></span>
+    <span>NETWORKING <b>◆</b></span>
   </div>
 </div>
 
-<div class="divider"></div>
+<section id="skills">
+  <div class="container">
+    <div class="section-top">
+      <div>
+        <div class="label">01 — SKILLS</div>
+        <h2 class="section-title">WHAT I BUILD</h2>
+      </div>
+      <p class="section-desc">
+        Systems designed around clean logic, reliable server-side validation,
+        modular code, and gameplay that actually feels good.
+      </p>
+    </div>
 
-<section class="skills-section" id="skills">
-  <div class="skills-bg"></div>
-  <div class="section-header">
-    <div class="section-eyebrow">01 — Expertise</div>
-    <h2>WHAT I <span>BUILD</span></h2>
-  </div>
-  <div class="skills-grid">
-    <div class="skill-card">
-      <div class="skill-num">01</div>
-      <div class="skill-icon-wrap">⚔️</div>
-      <div class="skill-name">Combat Systems</div>
-      <div class="skill-desc">Hitboxes, combo chains, parry & block mechanics, PVP balancing, and frame-perfect responsiveness tuned for competitive play.</div>
-      <div class="skill-bar-wrap"><div class="skill-bar-label"><span>Proficiency</span><span>95%</span></div><div class="skill-bar-bg"><div class="skill-bar" style="width:95%"></div></div></div>
-    </div>
-    <div class="skill-card">
-      <div class="skill-num">02</div>
-      <div class="skill-icon-wrap">🏃</div>
-      <div class="skill-name">Movement Systems</div>
-      <div class="skill-desc">Custom character controllers, wall-running, dashing, flight, ledge-grabs — fluid, responsive, and fully cheat-resistant.</div>
-      <div class="skill-bar-wrap"><div class="skill-bar-label"><span>Proficiency</span><span>93%</span></div><div class="skill-bar-bg"><div class="skill-bar" style="width:93%"></div></div></div>
-    </div>
-    <div class="skill-card">
-      <div class="skill-num">03</div>
-      <div class="skill-icon-wrap">✨</div>
-      <div class="skill-name">Ability Systems</div>
-      <div class="skill-desc">Modular, data-driven ability frameworks supporting unique powers, cooldown management, VFX hooks, and scalable expansion.</div>
-      <div class="skill-bar-wrap"><div class="skill-bar-label"><span>Proficiency</span><span>90%</span></div><div class="skill-bar-bg"><div class="skill-bar" style="width:90%"></div></div></div>
-    </div>
-    <div class="skill-card">
-      <div class="skill-num">04</div>
-      <div class="skill-icon-wrap">🧍</div>
-      <div class="skill-name">Ragdoll Systems</div>
-      <div class="skill-desc">Dynamic ragdolling on knockback and death events, with smooth blending back to animation state and physics-accurate reactions.</div>
-      <div class="skill-bar-wrap"><div class="skill-bar-label"><span>Proficiency</span><span>88%</span></div><div class="skill-bar-bg"><div class="skill-bar" style="width:88%"></div></div></div>
-    </div>
-    <div class="skill-card">
-      <div class="skill-num">05</div>
-      <div class="skill-icon-wrap">🌊</div>
-      <div class="skill-name">Physics & Cloth</div>
-      <div class="skill-desc">Cape simulation, cloth physics, wind effects — particle-driven details that add real weight and life to characters in motion.</div>
-      <div class="skill-bar-wrap"><div class="skill-bar-label"><span>Proficiency</span><span>85%</span></div><div class="skill-bar-bg"><div class="skill-bar" style="width:85%"></div></div></div>
-    </div>
-    <div class="skill-card">
-      <div class="skill-num">06</div>
-      <div class="skill-icon-wrap">🔧</div>
-      <div class="skill-name">Architecture & Net</div>
-      <div class="skill-desc">Scalable OOP game frameworks, server-authoritative networking, RemoteEvent architecture, anti-cheat, and performance tuning.</div>
-      <div class="skill-bar-wrap"><div class="skill-bar-label"><span>Proficiency</span><span>92%</span></div><div class="skill-bar-bg"><div class="skill-bar" style="width:92%"></div></div></div>
+    <div class="grid">
+      <article class="card">
+        <div class="icon">01 //</div>
+        <h3>Combat Systems</h3>
+        <p>Combat logic built around responsive attacks, hit detection, damage, cooldowns, combos, blocking, and server validation.</p>
+        <div class="tags"><span class="tag">HITBOXES</span><span class="tag">COMBOS</span><span class="tag">DAMAGE</span></div>
+      </article>
+
+      <article class="card">
+        <div class="icon">02 //</div>
+        <h3>Ability Systems</h3>
+        <p>Modular abilities with cooldowns, states, effects, inputs, and clean connections between gameplay and visuals.</p>
+        <div class="tags"><span class="tag">ABILITIES</span><span class="tag">COOLDOWNS</span><span class="tag">STATES</span></div>
+      </article>
+
+      <article class="card">
+        <div class="icon">03 //</div>
+        <h3>Gameplay Systems</h3>
+        <p>Rounds, objectives, interactions, progression, events, and reusable modules that control the actual game loop.</p>
+        <div class="tags"><span class="tag">ROUNDS</span><span class="tag">LOGIC</span><span class="tag">MODULES</span></div>
+      </article>
+
+      <article class="card">
+        <div class="icon">04 //</div>
+        <h3>Data & Inventory</h3>
+        <p>Player progression systems for stats, inventories, currencies, unlocks, saving, loading, and data validation.</p>
+        <div class="tags"><span class="tag">DATA</span><span class="tag">INVENTORY</span><span class="tag">STATS</span></div>
+      </article>
+
+      <article class="card">
+        <div class="icon">05 //</div>
+        <h3>Networking</h3>
+        <p>Client/server communication using RemoteEvents and RemoteFunctions with server-side checks for important actions.</p>
+        <div class="tags"><span class="tag">REMOTE EVENTS</span><span class="tag">SERVER</span></div>
+      </article>
+
+      <article class="card">
+        <div class="icon">06 //</div>
+        <h3>Optimization</h3>
+        <p>Cleaner loops, connections, modules, and event handling to keep systems efficient as experiences become larger.</p>
+        <div class="tags"><span class="tag">PERFORMANCE</span><span class="tag">CLEAN CODE</span></div>
+      </article>
     </div>
   </div>
 </section>
 
-<div class="divider"></div>
-
-<section class="projects-section" id="projects">
-  <div class="section-header">
-    <div class="section-eyebrow">02 — Portfolio</div>
-    <h2>SHIPPED <span>WORK</span></h2>
-  </div>
-  <div class="projects-grid">
-    <div class="project-card">
-      <div class="project-img"><div class="project-img-bg"></div>🖱️</div>
-      <div class="project-body">
-        <div class="project-type">Clicker Game · Roblox</div>
-        <div class="project-name">Jump Clicker</div>
-        <div class="project-desc">Scripted the core gameplay loop, progression and upgrade systems, data persistence, and leaderboard mechanics. Focused on smooth performance at high player counts.</div>
-        <div class="project-tags"><span class="tag">Gameplay</span><span class="tag">Progression</span><span class="tag">DataStore</span><span class="tag">Leaderboards</span></div>
+<section id="systems" style="padding-top:20px">
+  <div class="container">
+    <div class="section-top">
+      <div>
+        <div class="label">02 — SPECIALTIES</div>
+        <h2 class="section-title">SYSTEMS I CAN SCRIPT</h2>
       </div>
     </div>
-    <div class="project-card">
-      <div class="project-img"><div class="project-img-bg"></div>🧱</div>
-      <div class="project-body">
-        <div class="project-type">Obby · Platformer · Roblox</div>
-        <div class="project-name">Easy To Hard Wall Hop Obby 2</div>
-        <div class="project-desc">Built the full movement and obstacle system — custom player physics, checkpoint logic, difficulty scaling, and anti-exploit measures throughout.</div>
-        <div class="project-tags"><span class="tag">Movement</span><span class="tag">Physics</span><span class="tag">Checkpoints</span><span class="tag">Anti-Exploit</span></div>
+
+    <div class="grid">
+      <article class="card">
+        <div class="icon">+</div>
+        <h3>NPC / AI</h3>
+        <p>Enemy behavior, targeting, movement logic, attack states, and simple AI decision systems.</p>
+      </article>
+
+      <article class="card">
+        <div class="icon">+</div>
+        <h3>Movement</h3>
+        <p>Custom movement mechanics, sprinting, dashing, wall interactions, and movement states.</p>
+      </article>
+
+      <article class="card">
+        <div class="icon">+</div>
+        <h3>UI Logic</h3>
+        <p>Menus, buttons, shops, timers, ability displays, notifications, and interactive interfaces.</p>
+      </article>
+
+      <article class="card">
+        <div class="icon">+</div>
+        <h3>Round Systems</h3>
+        <p>Intermissions, team selection, maps, round states, win conditions, and player teleportation.</p>
+      </article>
+
+      <article class="card">
+        <div class="icon">+</div>
+        <h3>Admin Systems</h3>
+        <p>Permission-based commands, moderation logic, player management, and server controls.</p>
+      </article>
+
+      <article class="card">
+        <div class="icon">+</div>
+        <h3>Economy</h3>
+        <p>Currencies, rewards, shops, purchases, upgrades, and progression systems.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="projects" id="projects">
+  <div class="container">
+    <div class="section-top">
+      <div>
+        <div class="label">03 — PROJECTS</div>
+        <h2 class="section-title">SELECTED WORK</h2>
+      </div>
+      <p class="section-desc">
+        Projects and systems focused on gameplay logic and scripting.
+      </p>
+    </div>
+
+    <div class="grid">
+      <article class="card project">
+        <div class="project-top"><div class="project-number">01</div></div>
+        <div class="project-body">
+          <h3>Jump Clicker</h3>
+          <div class="type">CLICKER GAME · ROBLOX</div>
+          <p>A progression-focused clicker experience built around a simple gameplay loop.</p>
+          <ul>
+            <li>Core gameplay loop</li>
+            <li>Progression & upgrades</li>
+            <li>Data persistence</li>
+            <li>Leaderboards & stats</li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="card project">
+        <div class="project-top"><div class="project-number">02</div></div>
+        <div class="project-body">
+          <h3>Easy To Hard Wall Hop Obby 2</h3>
+          <div class="type">OBBY · PLATFORMER · ROBLOX</div>
+          <p>A difficulty-based obstacle experience focused on movement and progression.</p>
+          <ul>
+            <li>Movement systems</li>
+            <li>Obstacle logic</li>
+            <li>Checkpoints</li>
+            <li>Server-side validation</li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="card project">
+        <div class="project-top"><div class="project-number">03</div></div>
+        <div class="project-body">
+          <h3>Player Data Framework</h3>
+          <div class="type">DATA SYSTEM · ROBLOX</div>
+          <p>A reusable framework for handling player progression and persistent information.</p>
+          <ul>
+            <li>Saving & loading</li>
+            <li>Player stats</li>
+            <li>Inventory data</li>
+            <li>Data validation</li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="card project">
+        <div class="project-top"><div class="project-number">04</div></div>
+        <div class="project-body">
+          <h3>Game Logic Framework</h3>
+          <div class="type">GAMEPLAY SYSTEM · ROBLOX</div>
+          <p>Reusable gameplay architecture designed to make larger systems easier to manage.</p>
+          <ul>
+            <li>Round management</li>
+            <li>Interactions</li>
+            <li>Progression logic</li>
+            <li>Reusable modules</li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="card project">
+        <div class="project-top"><div class="project-number">05</div></div>
+        <div class="project-body">
+          <h3>Combat Framework</h3>
+          <div class="type">COMBAT · LUAU</div>
+          <p>A modular combat concept built around responsive gameplay and reusable mechanics.</p>
+          <ul>
+            <li>Attack handling</li>
+            <li>Hit detection</li>
+            <li>Damage logic</li>
+            <li>Cooldown management</li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="card project">
+        <div class="project-top"><div class="project-number">06</div></div>
+        <div class="project-body">
+          <h3>Ability System</h3>
+          <div class="type">ABILITIES · GAMEPLAY · LUAU</div>
+          <p>A flexible ability structure for games that need multiple skills and gameplay states.</p>
+          <ul>
+            <li>Ability modules</li>
+            <li>Cooldowns</li>
+            <li>State handling</li>
+            <li>Server validation</li>
+          </ul>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section id="about">
+  <div class="container">
+    <div class="section-top">
+      <div>
+        <div class="label">04 — ABOUT</div>
+        <h2 class="section-title">THE DEVELOPER</h2>
+      </div>
+    </div>
+
+    <div class="about-grid">
+      <div class="about">
+        <h3>BUILT AROUND<br><span style="color:var(--red)">CODE.</span></h3>
+        <p>
+          I'm NULL, a Roblox Luau scripter focused on creating the systems
+          that make a game actually work.
+        </p>
+        <p>
+          My main focus is gameplay programming — combat, abilities,
+          player data, networking, movement, rounds, progression, and
+          other systems that turn ideas into playable mechanics.
+        </p>
+        <p>
+          I care about code that is organized, reusable, responsive,
+          and easy to expand when a game gets bigger.
+        </p>
+      </div>
+
+      <div class="profile">
+        <div class="profile-head">// DEVELOPER_PROFILE</div>
+        <div class="profile-row"><span>HANDLE</span><span>jayden_7714</span></div>
+        <div class="profile-row"><span>ROLE</span><span>Luau Scripter</span></div>
+        <div class="profile-row"><span>LANGUAGE</span><span>Lua / Luau</span></div>
+        <div class="profile-row"><span>PLATFORM</span><span>Roblox Studio</span></div>
+        <div class="profile-row"><span>FOCUS</span><span>Gameplay Systems</span></div>
+        <div class="profile-row"><span>SPECIALTY</span><span>Combat & Abilities</span></div>
+        <div class="profile-row"><span>STATUS</span><span style="color:#74d98a">AVAILABLE</span></div>
       </div>
     </div>
   </div>
 </section>
 
-<div class="divider"></div>
-
-<section class="about-section" id="about">
-  <div class="section-header">
-    <div class="section-eyebrow">03 — About</div>
-    <h2>WHO I <span>AM</span></h2>
-  </div>
-  <div class="about-grid">
-    <div>
-      <div class="about-quote">"I don't just write code — I build the systems that make a game feel real."</div>
-      <div class="about-text">
-        <p>I'm KingCoder — a dedicated Lua and Roblox game developer with 5+ years of experience building full-scale game systems from scratch. I've been scripting since I was young and it's more than a skill, it's how I think.</p>
-        <p>I specialize in the systems that players feel most — combat that responds instantly, movement that flows naturally, abilities that look and feel powerful. The difference between a good game and a great one is in these details, and that's where I focus.</p>
-        <p>I'm easy to work with, communicate clearly, and take deadlines seriously. Whether you need one system or an entire game built from the ground up, I deliver.</p>
-      </div>
-    </div>
-    <div>
-      <div class="specs-card">
-        <div class="specs-header">// Developer Profile</div>
-        <div class="spec-row"><span class="spec-key">Handle</span><span class="spec-val red">jayden_79767</span></div>
-        <div class="spec-row"><span class="spec-key">Experience</span><span class="spec-val">5+ Years</span></div>
-        <div class="spec-row"><span class="spec-key">Language</span><span class="spec-val">Lua / Luau</span></div>
-        <div class="spec-row"><span class="spec-key">Platform</span><span class="spec-val">Roblox Studio</span></div>
-        <div class="spec-row"><span class="spec-key">Speciality</span><span class="spec-val">Combat & PVP Systems</span></div>
-        <div class="spec-row"><span class="spec-key">Communication</span><span class="spec-val green">● Responsive</span></div>
-        <div class="spec-row"><span class="spec-key">Availability</span><span class="spec-val green">● Open to Work</span></div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<div class="divider"></div>
-
-<section class="contact-section" id="contact">
-  <div class="contact-glow"></div>
-  <div class="contact-inner">
-    <div class="section-eyebrow" style="justify-content:center;">04 — Contact</div>
-    <div class="contact-big">LET'S<br/><span>BUILD.</span></div>
-    <p class="contact-sub">Got a project that needs a serious scripter? I'm available for full game development contracts and individual system builds. Let's talk.</p>
-    <div class="contact-card">
-      <div class="contact-label">// Find me on Discord</div>
-      <div class="discord-handle">jayden_79767</div>
-      <div class="contact-note">DM me and I'll respond fast — let's get to work.</div>
-    </div>
+<section class="contact" id="contact">
+  <div class="container">
+    <div class="label">05 — CONTACT</div>
+    <h2>LET'S BUILD.</h2>
+    <p>Need a Roblox scripter? Send me a message.</p>
+    <a class="discord" href="https://discord.com/" target="_blank" rel="noopener">
+      DISCORD — jayden_7714
+    </a>
   </div>
 </section>
 
 <footer>
-  <div class="footer-logo">KING<span>CODER</span></div>
-  <div class="footer-right">© 2025 · Lua / Roblox Developer · All rights reserved</div>
+  <div>© 2026 NULL. ALL RIGHTS RESERVED.</div>
+  <div><span>●</span> ROBLOX LUAU SCRIPTER</div>
 </footer>
 
 </body>
