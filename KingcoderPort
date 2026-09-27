@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>NULL — Roblox Luau Scripter</title>
-<meta name="description" content="NULL — Roblox Luau scripter specializing in combat, abilities, gameplay systems, data, networking and optimization.">
+<meta name="description" content="NULL — Roblox Luau scripter specializing in gameplay systems, combat, abilities, UI, data, networking and optimization.">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -24,8 +24,17 @@
   --head:"Rajdhani",sans-serif;
   --body:"Inter",sans-serif;
 }
-*{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth}
+
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+
+html{
+  scroll-behavior:smooth;
+}
+
 body{
   background:var(--bg);
   color:var(--text);
@@ -33,17 +42,34 @@ body{
   line-height:1.6;
   overflow-x:hidden;
 }
+
 body:before{
   content:"";
   position:fixed;
   inset:0;
   pointer-events:none;
   opacity:.035;
-  background:repeating-linear-gradient(0deg,transparent 0,transparent 2px,#fff 3px);
+  background:repeating-linear-gradient(
+    0deg,
+    transparent 0,
+    transparent 2px,
+    #fff 3px
+  );
   z-index:10;
 }
-a{color:inherit;text-decoration:none}
-.container{width:min(1120px,92%);margin:auto}
+
+a{
+  color:inherit;
+  text-decoration:none;
+}
+
+.container{
+  width:min(1120px,92%);
+  margin:auto;
+}
+
+/* NAV */
+
 .nav{
   height:76px;
   border-bottom:1px solid var(--line);
@@ -56,14 +82,38 @@ a{color:inherit;text-decoration:none}
   backdrop-filter:blur(12px);
   z-index:20;
 }
+
+.nav-inner{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  width:100%;
+}
+
 .logo{
   font:700 27px var(--head);
   letter-spacing:2px;
 }
-.logo span{color:var(--red)}
-.navlinks{display:flex;gap:30px;font-size:13px;color:#aaa}
-.navlinks a{transition:.2s}
-.navlinks a:hover{color:#fff}
+
+.logo span{
+  color:var(--red);
+}
+
+.navlinks{
+  display:flex;
+  gap:30px;
+  font-size:13px;
+  color:#aaa;
+}
+
+.navlinks a{
+  transition:.2s;
+}
+
+.navlinks a:hover{
+  color:#fff;
+}
+
 .status{
   border:1px solid #263f2c;
   background:#0b120d;
@@ -72,14 +122,18 @@ a{color:inherit;text-decoration:none}
   border-radius:4px;
   font:12px var(--mono);
 }
+
 .status i{
   display:inline-block;
-  width:6px;height:6px;
+  width:6px;
+  height:6px;
   border-radius:50%;
   background:#5ee47a;
   margin-right:7px;
   box-shadow:0 0 8px #5ee47a;
 }
+
+/* HERO */
 
 .hero{
   min-height:650px;
@@ -88,37 +142,57 @@ a{color:inherit;text-decoration:none}
   position:relative;
   border-bottom:1px solid var(--line);
 }
+
 .hero:after{
   content:"";
   position:absolute;
-  width:520px;height:520px;
-  right:-170px;top:40px;
-  background:radial-gradient(circle,rgba(226,75,74,.14),transparent 68%);
+  width:520px;
+  height:520px;
+  right:-170px;
+  top:40px;
+  background:radial-gradient(
+    circle,
+    rgba(226,75,74,.14),
+    transparent 68%
+  );
   pointer-events:none;
 }
+
 .eyebrow{
   color:var(--red);
   font:14px var(--mono);
   margin-bottom:18px;
 }
+
 .hero h1{
   font:700 clamp(65px,10vw,125px)/.78 var(--head);
   letter-spacing:-4px;
   margin-left:-6px;
 }
-.hero h1 span{color:var(--red)}
+
+.hero h1 span{
+  color:var(--red);
+}
+
 .hero h2{
   margin-top:28px;
   font:700 clamp(35px,6vw,70px)/.9 var(--head);
   letter-spacing:1px;
 }
+
 .hero p{
-  max-width:650px;
+  max-width:680px;
   color:var(--muted);
   margin-top:24px;
   font-size:15px;
 }
-.buttons{display:flex;gap:12px;margin-top:30px}
+
+.buttons{
+  display:flex;
+  gap:12px;
+  margin-top:30px;
+}
+
 .btn{
   padding:12px 20px;
   border:1px solid var(--line);
@@ -126,24 +200,41 @@ a{color:inherit;text-decoration:none}
   font-weight:600;
   transition:.2s;
 }
-.btn.primary{background:var(--red);border-color:var(--red);color:#fff}
-.btn:hover{transform:translateY(-2px);border-color:var(--red)}
-.btn.primary:hover{background:var(--red2)}
+
+.btn.primary{
+  background:var(--red);
+  border-color:var(--red);
+  color:#fff;
+}
+
+.btn:hover{
+  transform:translateY(-2px);
+  border-color:var(--red);
+}
+
+.btn.primary:hover{
+  background:var(--red2);
+}
+
 .stats{
   display:flex;
   gap:45px;
   margin-top:55px;
 }
+
 .stat strong{
   display:block;
   font:700 28px var(--head);
 }
+
 .stat small{
   color:#666;
   text-transform:uppercase;
   letter-spacing:1px;
   font-size:9px;
 }
+
+/* MARQUEE */
 
 .marquee{
   border-bottom:1px solid var(--line);
@@ -153,34 +244,64 @@ a{color:inherit;text-decoration:none}
   color:#68686f;
   font:12px var(--mono);
 }
+
 .marquee div{
   display:inline-block;
   animation:move 25s linear infinite;
 }
-.marquee span{margin:0 28px}
-.marquee b{color:var(--red)}
-@keyframes move{to{transform:translateX(-50%)}}
 
-section{padding:100px 0}
+.marquee span{
+  margin:0 28px;
+}
+
+.marquee b{
+  color:var(--red);
+}
+
+@keyframes move{
+  to{
+    transform:translateX(-50%);
+  }
+}
+
+/* SECTIONS */
+
+section{
+  padding:100px 0;
+}
+
 .section-top{
   display:flex;
   justify-content:space-between;
   align-items:end;
   margin-bottom:45px;
 }
-.label{font:12px var(--mono);color:var(--red)}
+
+.label{
+  font:12px var(--mono);
+  color:var(--red);
+}
+
 .section-title{
   font:700 48px var(--head);
   letter-spacing:-1px;
   margin-top:7px;
 }
-.section-desc{max-width:390px;color:var(--muted);font-size:13px}
+
+.section-desc{
+  max-width:420px;
+  color:var(--muted);
+  font-size:13px;
+}
+
+/* SKILLS */
 
 .grid{
   display:grid;
   grid-template-columns:repeat(3,1fr);
   gap:14px;
 }
+
 .card{
   background:var(--panel);
   border:1px solid var(--line);
@@ -188,33 +309,45 @@ section{padding:100px 0}
   position:relative;
   transition:.25s;
 }
+
 .card:hover{
   transform:translateY(-4px);
   border-color:#38383f;
 }
+
 .card:before{
   content:"";
   position:absolute;
-  top:-1px;left:25px;
-  width:35px;height:2px;
+  top:-1px;
+  left:25px;
+  width:35px;
+  height:2px;
   background:var(--red);
 }
+
 .icon{
   font:20px var(--mono);
   color:var(--red);
   margin-bottom:22px;
 }
+
 .card h3{
   font:700 24px var(--head);
   margin-bottom:9px;
 }
-.card p{color:var(--muted);font-size:12px}
+
+.card p{
+  color:var(--muted);
+  font-size:12px;
+}
+
 .tags{
   display:flex;
   flex-wrap:wrap;
   gap:6px;
   margin-top:20px;
 }
+
 .tag{
   border:1px solid var(--line);
   color:#85858d;
@@ -222,52 +355,116 @@ section{padding:100px 0}
   font:9px var(--mono);
 }
 
-.projects{background:#09090b}
+/* PROJECTS */
+
+.projects{
+  background:#09090b;
+}
+
 .project{
   padding:0;
   overflow:hidden;
 }
+
 .project-top{
   height:145px;
   display:flex;
   align-items:center;
   justify-content:center;
   background:
-    linear-gradient(135deg,rgba(226,75,74,.08),transparent),
-    repeating-linear-gradient(45deg,#0c0c0f 0,#0c0c0f 10px,#101014 10px,#101014 11px);
+    linear-gradient(
+      135deg,
+      rgba(226,75,74,.08),
+      transparent
+    ),
+    repeating-linear-gradient(
+      45deg,
+      #0c0c0f 0,
+      #0c0c0f 10px,
+      #101014 10px,
+      #101014 11px
+    );
   border-bottom:1px solid var(--line);
 }
-.project-number{font:700 50px var(--head);color:#29292f}
-.project-body{padding:25px}
-.project h3{font:700 27px var(--head)}
-.project .type{font:10px var(--mono);color:var(--red);margin:5px 0 15px}
-.project p{color:var(--muted);font-size:12px}
+
+.project-number{
+  font:700 50px var(--head);
+  color:#29292f;
+}
+
+.project-body{
+  padding:25px;
+}
+
+.project h3{
+  font:700 27px var(--head);
+}
+
+.project .type{
+  font:10px var(--mono);
+  color:var(--red);
+  margin:5px 0 15px;
+}
+
+.project p{
+  color:var(--muted);
+  font-size:12px;
+}
+
 .project ul{
   list-style:none;
   margin-top:17px;
   color:#999;
   font-size:11px;
 }
-.project li{margin:7px 0}
-.project li:before{content:"→";color:var(--red);margin-right:8px}
+
+.project li{
+  margin:7px 0;
+}
+
+.project li:before{
+  content:"→";
+  color:var(--red);
+  margin-right:8px;
+}
+
+/* ABOUT */
 
 .about-grid{
   display:grid;
   grid-template-columns:1.2fr .8fr;
   gap:50px;
 }
-.about h3{font:700 42px var(--head);margin-bottom:20px}
-.about p{color:var(--muted);font-size:14px;margin-bottom:16px}
+
+.about h3{
+  font:700 42px var(--head);
+  margin-bottom:20px;
+}
+
+.about h3 span{
+  color:var(--red);
+}
+
+.about p{
+  color:var(--muted);
+  font-size:14px;
+  margin-bottom:16px;
+}
+
+/* PROFILE */
+
 .profile{
   border:1px solid var(--line);
   background:var(--panel);
 }
+
 .profile-head{
   padding:20px;
   border-bottom:1px solid var(--line);
   font:11px var(--mono);
   color:var(--red);
 }
+
 .profile-row{
   display:flex;
   justify-content:space-between;
@@ -275,19 +472,37 @@ section{padding:100px 0}
   border-bottom:1px solid #19191e;
   font-size:11px;
 }
-.profile-row span:first-child{color:#62626a}
-.profile-row span:last-child{color:#ddd}
+
+.profile-row span:first-child{
+  color:#62626a;
+}
+
+.profile-row span:last-child{
+  color:#ddd;
+}
+
+/* CONTACT */
 
 .contact{
   text-align:center;
   border-top:1px solid var(--line);
   background:
-    radial-gradient(circle at center,rgba(226,75,74,.09),transparent 45%);
+    radial-gradient(
+      circle at center,
+      rgba(226,75,74,.09),
+      transparent 45%
+    );
 }
+
 .contact h2{
   font:700 clamp(50px,8vw,90px) var(--head);
 }
-.contact p{color:var(--muted);margin:15px auto 25px}
+
+.contact p{
+  color:var(--muted);
+  margin:15px auto 25px;
+}
+
 .discord{
   display:inline-block;
   border:1px solid var(--line);
@@ -295,7 +510,13 @@ section{padding:100px 0}
   font:13px var(--mono);
   transition:.2s;
 }
-.discord:hover{border-color:var(--red);color:var(--red)}
+
+.discord:hover{
+  border-color:var(--red);
+  color:var(--red);
+}
+
+/* FOOTER */
 
 footer{
   border-top:1px solid var(--line);
@@ -305,37 +526,102 @@ footer{
   display:flex;
   justify-content:space-between;
 }
-footer span{color:var(--red)}
+
+footer span{
+  color:var(--red);
+}
+
+/* MOBILE */
 
 @media(max-width:800px){
-  .navlinks{display:none}
-  .hero{min-height:590px}
-  .hero h1{font-size:70px}
-  .stats{gap:20px}
-  .grid{grid-template-columns:1fr 1fr}
-  .about-grid{grid-template-columns:1fr}
-  .section-top{display:block}
-  .section-desc{margin-top:15px}
+
+  .navlinks{
+    display:none;
+  }
+
+  .hero{
+    min-height:590px;
+  }
+
+  .hero h1{
+    font-size:70px;
+  }
+
+  .stats{
+    gap:20px;
+  }
+
+  .grid{
+    grid-template-columns:1fr 1fr;
+  }
+
+  .about-grid{
+    grid-template-columns:1fr;
+  }
+
+  .section-top{
+    display:block;
+  }
+
+  .section-desc{
+    margin-top:15px;
+  }
 }
+
 @media(max-width:540px){
-  .status{display:none}
-  section{padding:70px 0}
-  .hero h1{font-size:62px;letter-spacing:-2px}
-  .hero h2{font-size:39px}
-  .hero p{font-size:13px}
-  .stats{flex-wrap:wrap;margin-top:40px}
-  .grid{grid-template-columns:1fr}
-  .section-title{font-size:40px}
-  .buttons{flex-wrap:wrap}
+
+  .status{
+    display:none;
+  }
+
+  section{
+    padding:70px 0;
+  }
+
+  .hero h1{
+    font-size:62px;
+    letter-spacing:-2px;
+  }
+
+  .hero h2{
+    font-size:39px;
+  }
+
+  .hero p{
+    font-size:13px;
+  }
+
+  .stats{
+    flex-wrap:wrap;
+    margin-top:40px;
+  }
+
+  .grid{
+    grid-template-columns:1fr;
+  }
+
+  .section-title{
+    font-size:40px;
+  }
+
+  .buttons{
+    flex-wrap:wrap;
+  }
 }
 </style>
 </head>
 
 <body>
 
+<!-- NAV -->
+
 <nav class="nav">
-  <div class="container" style="display:flex;align-items:center;justify-content:space-between;width:100%">
-    <a class="logo" href="#">NULL<span>.</span></a>
+  <div class="container nav-inner">
+
+    <a class="logo" href="#">
+      NULL<span>.</span>
+    </a>
+
     <div class="navlinks">
       <a href="#skills">Skills</a>
       <a href="#systems">Systems</a>
@@ -343,320 +629,684 @@ footer span{color:var(--red)}
       <a href="#about">About</a>
       <a href="#contact">Contact</a>
     </div>
-    <div class="status"><i></i>AVAILABLE</div>
+
+    <div class="status">
+      <i></i>AVAILABLE
+    </div>
+
   </div>
 </nav>
 
+<!-- HERO -->
+
 <header class="hero">
+
   <div class="container">
-    <div class="eyebrow">// ROBLOX LUAU SCRIPTER — jayden_7714</div>
-    <h1>NULL<span>.</span></h1>
-    <h2>CODE THE<br>SYSTEMS.</h2>
+
+    <div class="eyebrow">
+      // ROBLOX LUAU SCRIPTER — jayden_7714
+    </div>
+
+    <h1>
+      NULL<span>.</span>
+    </h1>
+
+    <h2>
+      CODE THE<br>
+      SYSTEMS.
+    </h2>
+
     <p>
-      Roblox Luau scripter focused on gameplay systems, combat mechanics,
-      abilities, player data, networking, and the code behind polished
-      and responsive experiences.
+      Roblox Luau scripter focused on gameplay systems, combat,
+      abilities, player data, networking, and UI. I build the
+      code behind polished and responsive Roblox experiences.
     </p>
 
     <div class="buttons">
-      <a class="btn primary" href="#projects">VIEW PROJECTS</a>
-      <a class="btn" href="#contact">CONTACT ME</a>
+      <a class="btn primary" href="#projects">
+        VIEW PROJECTS
+      </a>
+
+      <a class="btn" href="#contact">
+        CONTACT ME
+      </a>
     </div>
 
     <div class="stats">
-      <div class="stat"><strong>50+</strong><small>Systems Created</small></div>
-      <div class="stat"><strong>LUAU</strong><small>Main Language</small></div>
-      <div class="stat"><strong>100%</strong><small>Gameplay Focus</small></div>
+
+      <div class="stat">
+        <strong>50+</strong>
+        <small>Systems Created</small>
+      </div>
+
+      <div class="stat">
+        <strong>LUAU</strong>
+        <small>Main Language</small>
+      </div>
+
+      <div class="stat">
+        <strong>UI</strong>
+        <small>Strong Skill</small>
+      </div>
+
     </div>
+
   </div>
+
 </header>
+
+<!-- MARQUEE -->
 
 <div class="marquee">
   <div>
+
     <span>COMBAT SYSTEMS <b>◆</b></span>
     <span>ABILITY FRAMEWORKS <b>◆</b></span>
     <span>PLAYER DATA <b>◆</b></span>
     <span>NETWORKING <b>◆</b></span>
     <span>GAMEPLAY LOGIC <b>◆</b></span>
+    <span>UI SYSTEMS <b>◆</b></span>
+    <span>UI DESIGN <b>◆</b></span>
     <span>OPTIMIZATION <b>◆</b></span>
     <span>NPC SYSTEMS <b>◆</b></span>
-    <span>UI LOGIC <b>◆</b></span>
+
     <span>COMBAT SYSTEMS <b>◆</b></span>
     <span>ABILITY FRAMEWORKS <b>◆</b></span>
     <span>PLAYER DATA <b>◆</b></span>
     <span>NETWORKING <b>◆</b></span>
+    <span>GAMEPLAY LOGIC <b>◆</b></span>
+    <span>UI SYSTEMS <b>◆</b></span>
+    <span>UI DESIGN <b>◆</b></span>
+
   </div>
 </div>
 
+<!-- SKILLS -->
+
 <section id="skills">
+
   <div class="container">
+
     <div class="section-top">
+
       <div>
         <div class="label">01 — SKILLS</div>
-        <h2 class="section-title">WHAT I BUILD</h2>
+        <h2 class="section-title">
+          WHAT I BUILD
+        </h2>
       </div>
+
       <p class="section-desc">
-        Systems designed around clean logic, reliable server-side validation,
-        modular code, and gameplay that actually feels good.
+        I focus on scripting gameplay systems while also
+        creating polished UI and the logic behind it.
       </p>
+
     </div>
 
     <div class="grid">
+
       <article class="card">
+
         <div class="icon">01 //</div>
+
         <h3>Combat Systems</h3>
-        <p>Combat logic built around responsive attacks, hit detection, damage, cooldowns, combos, blocking, and server validation.</p>
-        <div class="tags"><span class="tag">HITBOXES</span><span class="tag">COMBOS</span><span class="tag">DAMAGE</span></div>
+
+        <p>
+          Combat logic with attacks, hit detection, damage,
+          cooldowns, combos, blocking, and server validation.
+        </p>
+
+        <div class="tags">
+          <span class="tag">HITBOXES</span>
+          <span class="tag">COMBOS</span>
+          <span class="tag">DAMAGE</span>
+        </div>
+
       </article>
 
       <article class="card">
+
         <div class="icon">02 //</div>
+
         <h3>Ability Systems</h3>
-        <p>Modular abilities with cooldowns, states, effects, inputs, and clean connections between gameplay and visuals.</p>
-        <div class="tags"><span class="tag">ABILITIES</span><span class="tag">COOLDOWNS</span><span class="tag">STATES</span></div>
+
+        <p>
+          Modular abilities with cooldowns, states, effects,
+          inputs, and connections between gameplay and visuals.
+        </p>
+
+        <div class="tags">
+          <span class="tag">ABILITIES</span>
+          <span class="tag">COOLDOWNS</span>
+          <span class="tag">STATES</span>
+        </div>
+
       </article>
 
       <article class="card">
+
         <div class="icon">03 //</div>
-        <h3>Gameplay Systems</h3>
-        <p>Rounds, objectives, interactions, progression, events, and reusable modules that control the actual game loop.</p>
-        <div class="tags"><span class="tag">ROUNDS</span><span class="tag">LOGIC</span><span class="tag">MODULES</span></div>
+
+        <h3>UI Development</h3>
+
+        <p>
+          I create a lot of Roblox UI, including menus,
+          buttons, shops, HUDs, ability displays, notifications,
+          and interactive interfaces.
+        </p>
+
+        <div class="tags">
+          <span class="tag">UI DESIGN</span>
+          <span class="tag">UI SCRIPTING</span>
+          <span class="tag">HUD</span>
+        </div>
+
       </article>
 
       <article class="card">
+
         <div class="icon">04 //</div>
-        <h3>Data & Inventory</h3>
-        <p>Player progression systems for stats, inventories, currencies, unlocks, saving, loading, and data validation.</p>
-        <div class="tags"><span class="tag">DATA</span><span class="tag">INVENTORY</span><span class="tag">STATS</span></div>
+
+        <h3>Gameplay Systems</h3>
+
+        <p>
+          Rounds, objectives, interactions, progression,
+          events, and reusable modules that control the game.
+        </p>
+
+        <div class="tags">
+          <span class="tag">ROUNDS</span>
+          <span class="tag">LOGIC</span>
+          <span class="tag">MODULES</span>
+        </div>
+
       </article>
 
       <article class="card">
+
         <div class="icon">05 //</div>
-        <h3>Networking</h3>
-        <p>Client/server communication using RemoteEvents and RemoteFunctions with server-side checks for important actions.</p>
-        <div class="tags"><span class="tag">REMOTE EVENTS</span><span class="tag">SERVER</span></div>
+
+        <h3>Data & Inventory</h3>
+
+        <p>
+          Player progression systems for stats, inventories,
+          currencies, unlocks, saving, loading, and validation.
+        </p>
+
+        <div class="tags">
+          <span class="tag">DATA</span>
+          <span class="tag">INVENTORY</span>
+          <span class="tag">STATS</span>
+        </div>
+
       </article>
 
       <article class="card">
+
         <div class="icon">06 //</div>
-        <h3>Optimization</h3>
-        <p>Cleaner loops, connections, modules, and event handling to keep systems efficient as experiences become larger.</p>
-        <div class="tags"><span class="tag">PERFORMANCE</span><span class="tag">CLEAN CODE</span></div>
+
+        <h3>Networking</h3>
+
+        <p>
+          Client/server communication using RemoteEvents
+          and RemoteFunctions with server-side validation.
+        </p>
+
+        <div class="tags">
+          <span class="tag">REMOTE EVENTS</span>
+          <span class="tag">SERVER</span>
+        </div>
+
       </article>
+
     </div>
+
   </div>
+
 </section>
 
+<!-- SYSTEMS -->
+
 <section id="systems" style="padding-top:20px">
+
   <div class="container">
+
     <div class="section-top">
+
       <div>
         <div class="label">02 — SPECIALTIES</div>
-        <h2 class="section-title">SYSTEMS I CAN SCRIPT</h2>
+        <h2 class="section-title">
+          SYSTEMS I CAN SCRIPT
+        </h2>
       </div>
+
     </div>
 
     <div class="grid">
+
       <article class="card">
         <div class="icon">+</div>
         <h3>NPC / AI</h3>
-        <p>Enemy behavior, targeting, movement logic, attack states, and simple AI decision systems.</p>
+        <p>
+          Enemy behavior, targeting, movement logic,
+          attack states, and AI decision systems.
+        </p>
       </article>
 
       <article class="card">
         <div class="icon">+</div>
         <h3>Movement</h3>
-        <p>Custom movement mechanics, sprinting, dashing, wall interactions, and movement states.</p>
+        <p>
+          Custom movement mechanics, sprinting, dashing,
+          wall interactions, and movement states.
+        </p>
       </article>
 
       <article class="card">
         <div class="icon">+</div>
         <h3>UI Logic</h3>
-        <p>Menus, buttons, shops, timers, ability displays, notifications, and interactive interfaces.</p>
+        <p>
+          Menus, buttons, shops, timers, ability displays,
+          notifications, animations, and interactive interfaces.
+        </p>
       </article>
 
       <article class="card">
         <div class="icon">+</div>
         <h3>Round Systems</h3>
-        <p>Intermissions, team selection, maps, round states, win conditions, and player teleportation.</p>
+        <p>
+          Intermissions, teams, maps, round states,
+          win conditions, and player teleportation.
+        </p>
       </article>
 
       <article class="card">
         <div class="icon">+</div>
         <h3>Admin Systems</h3>
-        <p>Permission-based commands, moderation logic, player management, and server controls.</p>
+        <p>
+          Permission-based commands, moderation logic,
+          player management, and server controls.
+        </p>
       </article>
 
       <article class="card">
         <div class="icon">+</div>
         <h3>Economy</h3>
-        <p>Currencies, rewards, shops, purchases, upgrades, and progression systems.</p>
+        <p>
+          Currencies, rewards, shops, purchases,
+          upgrades, and progression systems.
+        </p>
       </article>
+
     </div>
+
   </div>
+
 </section>
 
+<!-- PROJECTS -->
+
 <section class="projects" id="projects">
+
   <div class="container">
+
     <div class="section-top">
+
       <div>
         <div class="label">03 — PROJECTS</div>
-        <h2 class="section-title">SELECTED WORK</h2>
+        <h2 class="section-title">
+          SELECTED WORK
+        </h2>
       </div>
+
       <p class="section-desc">
-        Projects and systems focused on gameplay logic and scripting.
+        Projects and systems focused on gameplay,
+        scripting, and UI development.
       </p>
+
     </div>
 
     <div class="grid">
+
       <article class="card project">
-        <div class="project-top"><div class="project-number">01</div></div>
+
+        <div class="project-top">
+          <div class="project-number">01</div>
+        </div>
+
         <div class="project-body">
+
           <h3>Jump Clicker</h3>
-          <div class="type">CLICKER GAME · ROBLOX</div>
-          <p>A progression-focused clicker experience built around a simple gameplay loop.</p>
+
+          <div class="type">
+            CLICKER GAME · ROBLOX
+          </div>
+
+          <p>
+            A progression-focused clicker experience
+            built around a simple gameplay loop.
+          </p>
+
           <ul>
             <li>Core gameplay loop</li>
             <li>Progression & upgrades</li>
             <li>Data persistence</li>
             <li>Leaderboards & stats</li>
           </ul>
+
         </div>
+
       </article>
 
       <article class="card project">
-        <div class="project-top"><div class="project-number">02</div></div>
+
+        <div class="project-top">
+          <div class="project-number">02</div>
+        </div>
+
         <div class="project-body">
+
           <h3>Easy To Hard Wall Hop Obby 2</h3>
-          <div class="type">OBBY · PLATFORMER · ROBLOX</div>
-          <p>A difficulty-based obstacle experience focused on movement and progression.</p>
+
+          <div class="type">
+            OBBY · PLATFORMER · ROBLOX
+          </div>
+
+          <p>
+            A difficulty-based obstacle experience
+            focused on movement and progression.
+          </p>
+
           <ul>
             <li>Movement systems</li>
             <li>Obstacle logic</li>
             <li>Checkpoints</li>
             <li>Server-side validation</li>
           </ul>
+
         </div>
+
       </article>
 
       <article class="card project">
-        <div class="project-top"><div class="project-number">03</div></div>
+
+        <div class="project-top">
+          <div class="project-number">03</div>
+        </div>
+
         <div class="project-body">
+
           <h3>Player Data Framework</h3>
-          <div class="type">DATA SYSTEM · ROBLOX</div>
-          <p>A reusable framework for handling player progression and persistent information.</p>
+
+          <div class="type">
+            DATA SYSTEM · ROBLOX
+          </div>
+
+          <p>
+            A reusable framework for handling player
+            progression and persistent information.
+          </p>
+
           <ul>
             <li>Saving & loading</li>
             <li>Player stats</li>
             <li>Inventory data</li>
             <li>Data validation</li>
           </ul>
+
         </div>
+
       </article>
 
       <article class="card project">
-        <div class="project-top"><div class="project-number">04</div></div>
+
+        <div class="project-top">
+          <div class="project-number">04</div>
+        </div>
+
         <div class="project-body">
+
           <h3>Game Logic Framework</h3>
-          <div class="type">GAMEPLAY SYSTEM · ROBLOX</div>
-          <p>Reusable gameplay architecture designed to make larger systems easier to manage.</p>
+
+          <div class="type">
+            GAMEPLAY SYSTEM · ROBLOX
+          </div>
+
+          <p>
+            Reusable gameplay architecture designed to
+            make larger systems easier to manage.
+          </p>
+
           <ul>
             <li>Round management</li>
             <li>Interactions</li>
             <li>Progression logic</li>
             <li>Reusable modules</li>
           </ul>
+
         </div>
+
       </article>
 
       <article class="card project">
-        <div class="project-top"><div class="project-number">05</div></div>
+
+        <div class="project-top">
+          <div class="project-number">05</div>
+        </div>
+
         <div class="project-body">
+
           <h3>Combat Framework</h3>
-          <div class="type">COMBAT · LUAU</div>
-          <p>A modular combat concept built around responsive gameplay and reusable mechanics.</p>
+
+          <div class="type">
+            COMBAT · LUAU
+          </div>
+
+          <p>
+            A modular combat concept built around
+            responsive gameplay and reusable mechanics.
+          </p>
+
           <ul>
             <li>Attack handling</li>
             <li>Hit detection</li>
             <li>Damage logic</li>
             <li>Cooldown management</li>
           </ul>
+
         </div>
+
       </article>
 
       <article class="card project">
-        <div class="project-top"><div class="project-number">06</div></div>
-        <div class="project-body">
-          <h3>Ability System</h3>
-          <div class="type">ABILITIES · GAMEPLAY · LUAU</div>
-          <p>A flexible ability structure for games that need multiple skills and gameplay states.</p>
-          <ul>
-            <li>Ability modules</li>
-            <li>Cooldowns</li>
-            <li>State handling</li>
-            <li>Server validation</li>
-          </ul>
+
+        <div class="project-top">
+          <div class="project-number">06</div>
         </div>
+
+        <div class="project-body">
+
+          <h3>UI System</h3>
+
+          <div class="type">
+            UI · LUAU · ROBLOX
+          </div>
+
+          <p>
+            Custom Roblox interfaces built with both
+            visual design and functional scripting in mind.
+          </p>
+
+          <ul>
+            <li>Menus & HUDs</li>
+            <li>Interactive buttons</li>
+            <li>Shops & panels</li>
+            <li>UI scripting & logic</li>
+          </ul>
+
+        </div>
+
       </article>
+
     </div>
+
   </div>
+
 </section>
 
+<!-- ABOUT -->
+
 <section id="about">
+
   <div class="container">
+
     <div class="section-top">
+
       <div>
         <div class="label">04 — ABOUT</div>
-        <h2 class="section-title">THE DEVELOPER</h2>
+        <h2 class="section-title">
+          THE DEVELOPER
+        </h2>
       </div>
+
     </div>
 
     <div class="about-grid">
+
       <div class="about">
-        <h3>BUILT AROUND<br><span style="color:var(--red)">CODE.</span></h3>
+
+        <h3>
+          BUILT AROUND<br>
+          <span>CODE.</span>
+        </h3>
+
         <p>
-          I'm NULL, a Roblox Luau scripter focused on creating the systems
-          that make a game actually work.
+          I'm NULL, a Roblox Luau scripter focused on
+          creating the systems that make a game actually work.
         </p>
+
         <p>
-          My main focus is gameplay programming — combat, abilities,
-          player data, networking, movement, rounds, progression, and
-          other systems that turn ideas into playable mechanics.
+          My main focus is gameplay programming — combat,
+          abilities, player data, networking, movement,
+          rounds, progression, and other systems that turn
+          ideas into playable mechanics.
         </p>
+
         <p>
-          I care about code that is organized, reusable, responsive,
-          and easy to expand when a game gets bigger.
+          I also have a strong focus on UI. I've created
+          a lot of Roblox interfaces and enjoy building UI
+          that looks clean while still being fully functional
+          and properly scripted.
         </p>
+
+        <p>
+          I care about code that is organized, reusable,
+          responsive, and easy to expand when a game gets bigger.
+        </p>
+
       </div>
 
       <div class="profile">
-        <div class="profile-head">// DEVELOPER_PROFILE</div>
-        <div class="profile-row"><span>HANDLE</span><span>jayden_7714</span></div>
-        <div class="profile-row"><span>ROLE</span><span>Luau Scripter</span></div>
-        <div class="profile-row"><span>LANGUAGE</span><span>Lua / Luau</span></div>
-        <div class="profile-row"><span>PLATFORM</span><span>Roblox Studio</span></div>
-        <div class="profile-row"><span>FOCUS</span><span>Gameplay Systems</span></div>
-        <div class="profile-row"><span>SPECIALTY</span><span>Combat & Abilities</span></div>
-        <div class="profile-row"><span>STATUS</span><span style="color:#74d98a">AVAILABLE</span></div>
+
+        <div class="profile-head">
+          // DEVELOPER_PROFILE
+        </div>
+
+        <div class="profile-row">
+          <span>HANDLE</span>
+          <span>jayden_7714</span>
+        </div>
+
+        <div class="profile-row">
+          <span>ROLE</span>
+          <span>Luau Scripter</span>
+        </div>
+
+        <div class="profile-row">
+          <span>LANGUAGE</span>
+          <span>Lua / Luau</span>
+        </div>
+
+        <div class="profile-row">
+          <span>PLATFORM</span>
+          <span>Roblox Studio</span>
+        </div>
+
+        <div class="profile-row">
+          <span>FOCUS</span>
+          <span>Gameplay Systems</span>
+        </div>
+
+        <div class="profile-row">
+          <span>UI</span>
+          <span>Strong Skill</span>
+        </div>
+
+        <div class="profile-row">
+          <span>SPECIALTY</span>
+          <span>Combat & Abilities</span>
+        </div>
+
+        <div class="profile-row">
+          <span>STATUS</span>
+          <span style="color:#74d98a">
+            AVAILABLE
+          </span>
+        </div>
+
       </div>
+
     </div>
+
   </div>
+
 </section>
+
+<!-- CONTACT -->
 
 <section class="contact" id="contact">
+
   <div class="container">
-    <div class="label">05 — CONTACT</div>
-    <h2>LET'S BUILD.</h2>
-    <p>Need a Roblox scripter? Send me a message.</p>
-    <a class="discord" href="https://discord.com/" target="_blank" rel="noopener">
+
+    <div class="label">
+      05 — CONTACT
+    </div>
+
+    <h2>
+      LET'S BUILD.
+    </h2>
+
+    <p>
+      Need a Roblox scripter for your project?
+      Send me a message.
+    </p>
+
+    <a
+      class="discord"
+      href="https://discord.com/"
+      target="_blank"
+      rel="noopener"
+    >
       DISCORD — jayden_7714
     </a>
+
   </div>
+
 </section>
 
+<!-- FOOTER -->
+
 <footer>
-  <div>© 2026 NULL. ALL RIGHTS RESERVED.</div>
-  <div><span>●</span> ROBLOX LUAU SCRIPTER</div>
+
+  <div>
+    © 2026 NULL. ALL RIGHTS RESERVED.
+  </div>
+
+  <div>
+    <span>●</span>
+    ROBLOX LUAU SCRIPTER
+  </div>
+
 </footer>
 
 </body>
